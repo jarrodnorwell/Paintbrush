@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25094"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SWTextToolWindowController">
+            <connections>
+                <outlet property="textView" destination="V5N-51-AcE" id="p6d-fs-lka"/>
+                <outlet property="window" destination="nRy-cg-S6W" id="tK4-6d-HDa"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="98" userLabel="Font Manager" customClass="NSFontManager"/>
+        <window title="Add Text" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="nRy-cg-S6W" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="173" y="116" width="480" height="270"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1084"/>
+            <view key="contentView" id="TPp-sL-Va0">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView appearanceType="aqua" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcZ-vf-Y80">
+                        <rect key="frame" x="20" y="66" width="440" height="184"/>
+                        <clipView key="contentView" drawsBackground="NO" id="Ox3-rQ-T7z">
+                            <rect key="frame" x="1" y="1" width="438" height="182"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView wantsLayer="YES" verticallyResizable="YES" usesFontPanel="YES" usesInspectorBar="YES" findStyle="bar" allowsDocumentBackgroundColorChange="YES" usesRuler="YES" spellingCorrection="YES" smartInsertDelete="YES" id="V5N-51-AcE">
+                                    <rect key="frame" x="0.0" y="0.0" width="438" height="182"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <size key="minSize" width="432" height="182"/>
+                                    <size key="maxSize" width="440" height="10000000"/>
+                                </textView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="wJs-AU-0Af">
+                            <rect key="frame" x="-100" y="-100" width="240" height="17"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="sdz-Um-lhu">
+                            <rect key="frame" x="422" y="1" width="17" height="182"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xjh-cW-PEp">
+                        <rect key="frame" x="20" y="20" width="52" height="24"/>
+                        <buttonCell key="cell" type="push" title="Font" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="KTb-EI-xs4">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="orderFrontFontPanel:" target="98" id="Cwp-Xn-TrK"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="acF-J8-M0X">
+                        <rect key="frame" x="401" y="20" width="59" height="24"/>
+                        <buttonCell key="cell" type="push" title="Insert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="L9m-Gw-gSQ">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="enterText:" target="-2" id="o0p-2N-zwT"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gHB-Sx-v8a">
+                        <rect key="frame" x="323" y="20" width="66" height="24"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lxc-8T-mv6">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="EE8-fd-JSr"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="DcZ-vf-Y80" secondAttribute="trailing" constant="20" symbolic="YES" id="2d2-gD-t3M"/>
+                    <constraint firstAttribute="bottom" secondItem="acF-J8-M0X" secondAttribute="bottom" constant="20" symbolic="YES" id="8jq-S8-Obz"/>
+                    <constraint firstItem="DcZ-vf-Y80" firstAttribute="top" secondItem="TPp-sL-Va0" secondAttribute="top" constant="20" symbolic="YES" id="Ju3-uW-g0c"/>
+                    <constraint firstAttribute="bottom" secondItem="Xjh-cW-PEp" secondAttribute="bottom" constant="20" symbolic="YES" id="Jwy-zJ-qRz"/>
+                    <constraint firstAttribute="bottom" secondItem="gHB-Sx-v8a" secondAttribute="bottom" constant="20" symbolic="YES" id="Jyu-EV-lmk"/>
+                    <constraint firstItem="acF-J8-M0X" firstAttribute="leading" secondItem="gHB-Sx-v8a" secondAttribute="trailing" constant="12" symbolic="YES" id="N0K-65-QUi"/>
+                    <constraint firstItem="DcZ-vf-Y80" firstAttribute="leading" secondItem="TPp-sL-Va0" secondAttribute="leading" constant="20" symbolic="YES" id="Ufk-Og-Rrq"/>
+                    <constraint firstItem="Xjh-cW-PEp" firstAttribute="leading" secondItem="TPp-sL-Va0" secondAttribute="leading" constant="20" symbolic="YES" id="aGg-bX-yNE"/>
+                    <constraint firstAttribute="trailing" secondItem="acF-J8-M0X" secondAttribute="trailing" constant="20" symbolic="YES" id="aSf-se-avA"/>
+                    <constraint firstItem="Xjh-cW-PEp" firstAttribute="top" secondItem="DcZ-vf-Y80" secondAttribute="bottom" constant="22" id="qBU-DQ-G7K"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="iHP-lD-FTa"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="539"/>
+        </window>
+    </objects>
+</document>
