@@ -88,6 +88,7 @@
 	return nil;
 }
 
+/*
 - (NSCursor *)cursor
 {
 	if (!customCursor) {
@@ -96,6 +97,7 @@
 	}
 	return customCursor;
 }
+ */
 
 - (NSString *)description
 {

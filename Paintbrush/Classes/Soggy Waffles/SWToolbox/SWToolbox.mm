@@ -74,7 +74,7 @@
     SWToolboxController *controller = [SWToolboxController sharedToolboxPanelController];
     SWDocument *document = [controller activeDocument];
     SWPaintView *view = [document paintView];
-    [view cursorUpdate:[NSApp currentEvent]];
+    // [view cursorUpdate:[NSApp currentEvent]];
     
 }
 

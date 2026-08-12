@@ -59,7 +59,7 @@
 	gridColor = [NSColor gridColor];
 	
 	// Ensure the correct cursor is displayed when opening a new document
-    [self cursorUpdate:[NSApp currentEvent]];
+    // [self cursorUpdate:[NSApp currentEvent]];
 	
 	// Set up drag stuff
 	[[self window] registerForDraggedTypes:[NSArray arrayWithObjects:
@@ -322,6 +322,7 @@
 
 
 // Overridden to set the correct cursor
+/*
 - (void)cursorUpdate:(NSEvent *)event
 {
 	if (toolbox && [toolbox currentTool]) 
@@ -333,6 +334,7 @@
 	else
 		[super cursorUpdate:event];
 }
+ */
 
 
 // Handles keyboard events

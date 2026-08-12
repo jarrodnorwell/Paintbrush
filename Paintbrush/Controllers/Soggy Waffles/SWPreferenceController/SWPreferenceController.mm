@@ -58,10 +58,8 @@
 
 // Sets the default fileType for new documents (can always be set in the save dialog, however)
 - (IBAction)changeFileType:(id)sender {
-    [[NSUserDefaults standardUserDefaults] setValue:[SWImageTools fileExtensionForUTType:[SWImageTools uttypeForFileExtension:[sender titleOfSelectedItem]]] forKey:@"FileType"];
-    
-	// [[NSUserDefaults standardUserDefaults] setValue:[SWImageTools convertFileType:[sender titleOfSelectedItem]].preferredFilenameExtension
-	// 										 forKey:@"FileType"];
+    [[NSUserDefaults standardUserDefaults] setValue:[sender titleOfSelectedItem]
+                                             forKey:@"FileType"];
 }
 
 

@@ -77,7 +77,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 - (void)dealloc
 {	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[savePanelAccessoryController removeObserver:self forKeyPath:kSWCurrentFileTypeString];
+	[savePanelAccessoryController removeObserver:self forKeyPath:kSWCurrentFileType];
 }
 
 
@@ -307,47 +307,45 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Saving data: returns the correctly-formatted image data
 - (NSData *)dataOfType:(NSString *)aType error:(NSError **)anError
 {
-	NSBitmapImageRep *bitmap = [dataSource mainImage];
-//	NSBitmapImageRep *bitmap = [SWImageTools createMonochromeImage:[paintView mainImage]];
+    NSBitmapImageRep *bitmap = [dataSource mainImage];
+//    NSBitmapImageRep *bitmap = [SWImageTools createMonochromeImage:[paintView mainImage]];
 
-	[SWImageTools flipImageVertical:bitmap];
-    NSLog(@"%s, %@", __FUNCTION__, aType);
-		
-	NSData *data = nil;
+    [SWImageTools flipImageVertical:bitmap];
+        
+    NSData *data = nil;
     NSBitmapImageFileType fileType = NSBitmapImageFileTypePNG;
-	
-    NSLog(@"aType = %@", aType);
-    // NSString *aCleanType = [[aType stringByReplacingOccurrencesOfString:@"public." withString:@""] lowercaseString];
-	if ([aType isEqualToString:UTTypeBMP.identifier])
+    
+    NSLog(@"fileType = %@", aType);
+    if ([aType isEqualToString:@"bmp"])
         fileType = NSBitmapImageFileTypeBMP;
-	else if ([aType isEqualToString:UTTypePNG.identifier])
+    else if ([aType isEqualToString:@"png"])
         fileType = NSBitmapImageFileTypePNG;
-	else if ([aType isEqualToString:UTTypeJPEG.identifier])
+    else if ([aType isEqualToString:@"jpg"])
         fileType = NSBitmapImageFileTypeJPEG;
-	else if ([aType isEqualToString:UTTypeGIF.identifier])
+    else if ([aType isEqualToString:@"gif"])
         fileType = NSBitmapImageFileTypeGIF;
-	else if ([aType isEqualToString:UTTypeTIFF.identifier])
+    else if ([aType isEqualToString:@"tif"])
         fileType = NSBitmapImageFileTypeTIFF;
-	else
-		DebugLog(@"Error: unknown filetype!");
-	
-	// We need to retrieve the data stored in the save panel, and pack them into a dictionary
+    else
+        DebugLog(@"Error: unknown filetype!");
+    
+    // We need to retrieve the data stored in the save panel, and pack them into a dictionary
     NSTIFFCompression tiffCompression = (fileType == NSBitmapImageFileTypeJPEG ? NSTIFFCompressionJPEG : NSTIFFCompressionNone);
-	CGFloat compressionFactor = [savePanelAccessoryController imageQuality];
-	//BOOL alpha = [savePanelAccessoryViewController isAlphaEnabled];
-	NSDictionary *propDict = [NSDictionary dictionaryWithObjectsAndKeys:
-							  [NSNumber numberWithInteger:tiffCompression], NSImageCompressionMethod,
-							  [NSNumber numberWithFloat:compressionFactor], NSImageCompressionFactor, 
-							  nil];
-	
-	// Convert the image into the data that we need to return
-	data = [bitmap representationUsingType:fileType 
-								properties:propDict];
-	
-	// Remember to re-flip the image after it's been saved!
-	[SWImageTools flipImageVertical:bitmap];
+    CGFloat compressionFactor = [savePanelAccessoryController imageQuality];
+    //BOOL alpha = [savePanelAccessoryViewController isAlphaEnabled];
+    NSDictionary *propDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInteger:tiffCompression], NSImageCompressionMethod,
+                              [NSNumber numberWithFloat:compressionFactor], NSImageCompressionFactor,
+                              nil];
+    
+    // Convert the image into the data that we need to return
+    data = [bitmap representationUsingType:fileType
+                                properties:propDict];
+    
+    // Remember to re-flip the image after it's been saved!
+    [SWImageTools flipImageVertical:bitmap];
 
-	return data;
+    return data;
 }
 
 
@@ -378,40 +376,40 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Customizing our save panel to provide a few more options for the user
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel
 {
-	if (!savePanelAccessoryController) {
-		savePanelAccessoryController = [[SWSavePanelAccessoryController alloc] initWithNibName:@"SavePanelAccessory"
-																								bundle:nil];
-		[savePanelAccessoryController addObserver:self
-										   forKeyPath:kSWCurrentFileTypeString
-											  options:NSKeyValueObservingOptionNew 
-											  context:NULL];
-	}
+    if (!savePanelAccessoryController) {
+        savePanelAccessoryController = [[SWSavePanelAccessoryController alloc] initWithNibName:@"SavePanelAccessory"
+                                                                                                bundle:nil];
+        [savePanelAccessoryController addObserver:self
+                                           forKeyPath:kSWCurrentFileType
+                                              options:NSKeyValueObservingOptionNew
+                                              context:NULL];
+    }
 
-	// Update the filetype based on the user defaults (after converting from human readable form)
-	NSString *savedValue = [[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"];
-    currentFileType = savedValue;
-	// currentFileType = [SWImageTools convertFileType:savedValue];
-	
-	// Make sure that it's loaded its view
-	[savePanelAccessoryController loadView];
-	NSView *accessoryView = [savePanelAccessoryController viewForFileType:[SWImageTools uttypeForFileExtension:currentFileType]];
-	if (accessoryView) {
-		[savePanel setAccessoryView:accessoryView];
-	}
-	
-    NSLog(@"%s, %@", __FUNCTION__, currentFileType);
-	// Make sure the correct file extension is being used
-    [savePanel setAllowedFileTypes:@[currentFileType]];
-    // [savePanel setAllowedContentTypes:@[[SWImageTools uttypeForFileExtension:currentFileType]]];
-	
-	return YES;
+    // Update the filetype based on the user defaults (after converting from human readable form)
+    NSString *savedValue = [[NSUserDefaults standardUserDefaults] valueForKey:@"FileType"];
+    currentFileType = [SWImageTools convertFromFileType:savedValue];
+    
+    // Make sure that it's loaded its view
+    [savePanelAccessoryController loadView];
+    NSView *accessoryView = [savePanelAccessoryController viewForFileType:savedValue];
+    if (accessoryView) {
+        [savePanel setAccessoryView:accessoryView];
+    }
+    
+    if ([currentFileType isKindOfClass:[UTType class]]) {
+        currentFileType = [(UTType *)currentFileType preferredFilenameExtension];
+    }
+    
+    // Make sure the correct file extension is being used
+    [savePanel setAllowedFileTypes:[NSArray arrayWithObject:currentFileType]];
+    
+    return YES;
 }
 
 
 // We need to override this because our save panel has its own format popup
 - (NSString *)fileTypeFromLastRunSavePanel
 {
-    NSLog(@"%s, %@", __FUNCTION__, currentFileType);
     return currentFileType;
 }
 
@@ -425,12 +423,14 @@ static BOOL kSWDocumentWillShowSheet = YES;
     NSString *newFileType = (NSString *)[change valueForKey:NSKeyValueChangeNewKey];
 	if (newFileType)
 	{
-        NSLog(@"newFileType = %@", newFileType);
-		currentFileType = newFileType;
+        if ([newFileType isKindOfClass:[UTType class]]) {
+            currentFileType = [(UTType *)newFileType preferredFilenameExtension];
+        } else {
+            currentFileType = newFileType;
+        }
+        
 		NSSavePanel *savePanel = (NSSavePanel *)[[savePanelAccessoryController view] window];
-        NSLog(@"%s, %@", __FUNCTION__, currentFileType);
-        [savePanel setAllowedFileTypes:@[currentFileType]];
-        // [savePanel setAllowedContentTypes:@[[SWImageTools uttypeForFileExtension:currentFileType]]];
+        [savePanel setAllowedFileTypes:[NSArray arrayWithObject:currentFileType]];
 	}
 }
 
@@ -580,7 +580,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
     }
     
     if (data) {
-        [paintView cursorUpdate:[NSApp currentEvent]]; // TODO: (jarrodnorwell) check this
+        // [paintView cursorUpdate:[NSApp currentEvent]]; // TODO: (jarrodnorwell) check this
         NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
 
         NSPoint origin = [[paintView superview] bounds].origin;
@@ -598,10 +598,14 @@ static BOOL kSWDocumentWillShowSheet = YES;
         // As always, flip the image to be viewed in our flipped view
         [SWImageTools flipImageVertical:[dataSource bufferImage]];
 
+        SWTool *oldTool = [toolbox currentTool];
+        
+        [toolbox setCurrentTool:[toolbox toolForLabel:@"SWSelectionTool"]];
         [(SWSelectionTool *)[toolbox currentTool] setClippingRect:rect
                                                          forImage:[dataSource bufferImage]
                                                     withMainImage:[dataSource mainImage]];
         [paintView setNeedsDisplay:YES];
+        [toolbox setCurrentTool:oldTool];
     }
 }
 
@@ -617,7 +621,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 								  bufferImage:[dataSource bufferImage] 
 								   mouseEvent:MOUSE_UP];
 	
-	[paintView cursorUpdate:[NSApp currentEvent]]; // TODO: (jarrodnorwell) check this
+	// [paintView cursorUpdate:[NSApp currentEvent]]; // TODO: (jarrodnorwell) check this
 	[paintView setNeedsDisplay:YES];
 }
 

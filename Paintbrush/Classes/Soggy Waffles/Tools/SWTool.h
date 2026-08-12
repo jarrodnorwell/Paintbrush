@@ -97,6 +97,6 @@ typedef enum
 					   withMainImage:(NSBitmapImageRep *)mainImage 
 						 bufferImage:(NSBitmapImageRep *)bufferImage 
 						  mouseEvent:(SWMouseEvent)event;
-- (NSCursor *)cursor;
+// - (NSCursor *)cursor;
 
 @end

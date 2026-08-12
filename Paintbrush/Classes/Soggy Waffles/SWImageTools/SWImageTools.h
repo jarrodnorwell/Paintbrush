@@ -21,9 +21,7 @@
 
 
 @interface SWImageTools : NSObject
-+(NSString *) fileExtensionForUTType:(UTType *)type;
-+(UTType *) uttypeForFileExtension:(NSString *)extension;
-
++(NSString *) convertFromFileType:(NSString *)type;
 
 
 + (void)invertImage:(NSBitmapImageRep *)image;

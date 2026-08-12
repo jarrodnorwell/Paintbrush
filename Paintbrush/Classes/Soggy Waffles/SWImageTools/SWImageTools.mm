@@ -23,17 +23,26 @@
 
 
 @implementation SWImageTools
-+ (NSString *)fileExtensionForUTType:(UTType *)type {
-    return [[type identifier] lowercaseString];
-}
-
-+ (UTType *)uttypeForFileExtension:(NSString *)extension {
-    if (![extension containsString:@"public."])
-        return [UTType typeWithIdentifier:[@"public." stringByAppendingString:extension.lowercaseString]];
++(NSString *) convertFromFileType:(NSString *)type {
+    NSString *finalString = nil;
+    NSString *lowerCaseFileType = [type lowercaseString];
+    if ([lowerCaseFileType length] == 3)
+    {
+        finalString = lowerCaseFileType;
+    }
     else
-        return [UTType typeWithIdentifier:extension.lowercaseString];
+    {
+        // Two special cases at the moment
+        if ([lowerCaseFileType isEqualToString:@"tiff"])
+            finalString = @"tif";
+        else if ([lowerCaseFileType isEqualToString:@"jpeg"])
+            finalString = @"jpg";
+        else
+            finalString = @"";
+    }
+    
+    return finalString;
 }
-
 
 
 // Uses Core Image filters to invert the colors of the image

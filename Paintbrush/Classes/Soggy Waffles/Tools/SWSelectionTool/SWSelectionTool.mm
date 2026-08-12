@@ -343,11 +343,8 @@
 	SWLockFocus(selectedImage);
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 	// Create the point to paste at
-	NSPoint point = NSMakePoint(clippingRect.origin.x, clippingRect.origin.y + (clippingRect.size.height - selectedImage.size.height));
-    [image drawInRect:NSMakeRect(point.x,
-                                 point.y,
-                                 image.pixelsWide,
-                                 image.pixelsHigh)];
+    NSPoint point = NSMakePoint(clippingRect.origin.x, clippingRect.origin.y + (clippingRect.size.height - selectedImage.size.height));
+    [image drawAtPoint:point];
 	SWUnlockFocus(selectedImage);
 	
 	// Make the copies of the image for with/without transparency

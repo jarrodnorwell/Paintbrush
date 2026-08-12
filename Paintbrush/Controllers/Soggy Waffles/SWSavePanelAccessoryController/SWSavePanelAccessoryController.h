@@ -20,7 +20,7 @@
 #import <Cocoa/Cocoa.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
-extern NSString * const kSWCurrentFileTypeString;
+extern NSString * const kSWCurrentFileType;
 
 @interface SWSavePanelAccessoryController : NSViewController {
 	// We maintain a different view for certain fileTypes, as well as a default one
@@ -31,7 +31,7 @@ extern NSString * const kSWCurrentFileTypeString;
 	IBOutlet NSView *containerView;
 	
 	// The currently-selected filetype -- used for KVO
-	NSString *currentFileTypeString;
+    NSString *currentFileType;
 	
 	// The controls in our views -- we start with the global popup button
 	IBOutlet NSPopUpButton *fileTypeButton;
@@ -41,11 +41,11 @@ extern NSString * const kSWCurrentFileTypeString;
 	CGFloat imageQuality;
 }
 
-- (void)updateViewForFileType:(UTType *)fileType;
-- (NSView *)viewForFileType:(UTType *)fileType;
+- (void)updateViewForFileType:(NSString *)fileType;
+- (NSView *)viewForFileType:(NSString *)fileType;
 - (IBAction)fileTypeDidChange:(id)sender;
 
-@property (retain) NSString *currentFileTypeString;
+@property (retain) NSString *currentFileType;
 
 // These values are bound (binded?) to the controls in the various subviews
 @property (assign) BOOL isAlphaEnabled;

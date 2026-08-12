@@ -57,6 +57,15 @@
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterNoStyle];
+    
+    [widthFieldOriginal setFormatter:formatter];
+    [heightFieldOriginal setFormatter:formatter];
+    
+    [widthFieldNew setFormatter:formatter];
+    [heightFieldNew setFormatter:formatter];
+    
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(textDidChange:)
 												 name:NSControlTextDidChangeNotification
