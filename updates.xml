@@ -10,9 +10,14 @@
       <title>Version 4.0</title>
       <link>https://jarrodnorwell.com/apps/paintbrush</link>
       <sparkle:version>4.0</sparkle:version>
-      <sparkle:releaseNotesLink>
-        https://jarrodnorwell.com/apps/paintbrush#changelog
-      </sparkle:releaseNotesLink>
+      <description sparkle:format="markdown">
+        # Added
+          - new Sparke changelog and update implementation
+        # Fixed
+          - saving for all previously supported file formats
+          - (partially) pasting an image from the pasteboard
+          - an issue where saving would throw a warning that it could not read the saved file
+      </description>
       <pubDate>Thu, 13 Aug 2026 03:36:00 +0800</pubDate>
       <enclosure url="https://github.com/jarrodnorwell/Paintbrush/releases/download/4.0/Paintbrush.dmg" type="application/octet-stream" sparkle:edSignature="k188JSzRQ5E6SXBLtlKV2LOZLdRbyEGspgnKuE2mc3XIXGFZEkwmUpJjo/Y1Qs5VFzNQF2z5vyvo0HPrTfMjBA==" length="3082179" />
     </item>
