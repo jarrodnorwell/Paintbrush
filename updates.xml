@@ -10,11 +10,11 @@
       <title>Version 4.0</title>
       <link>https://jarrodnorwell.com/apps/paintbrush</link>
       <sparkle:version>4.0</sparkle:version>
-      <description>
-        
-      </description>
+      <sparkle:releaseNotesLink>
+        https://jarrodnorwell.com/apps/paintbrush#changelog
+      </sparkle:releaseNotesLink>
       <pubDate>Thu, 13 Aug 2026 03:36:00 +0800</pubDate>
-      <enclosure url="https://github.com/jarrodnorwell/Paintbrush/releases/download/4.0/Paintbrush.dmg" type="application/octet-stream" sparkle:edSignature="CsWXWj3O7DLEcyFv5DO6fnLFJNqcgOZa9/WzYNM/bszdBCNVuY9SL7J57UZcpZMH7K2JNMAZbBI//lwLt//2CQ==" length="3081554" />
+      <enclosure url="https://github.com/jarrodnorwell/Paintbrush/releases/download/4.0/Paintbrush.dmg" type="application/octet-stream" sparkle:edSignature="k188JSzRQ5E6SXBLtlKV2LOZLdRbyEGspgnKuE2mc3XIXGFZEkwmUpJjo/Y1Qs5VFzNQF2z5vyvo0HPrTfMjBA==" length="3082179" />
     </item>
   </channel>
 </rss>
