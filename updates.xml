@@ -1,0 +1,20 @@
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>Paintbrush Changelog</title>
+    <link>
+      https://raw.githubusercontent.com/jarrodnorwell/Paintbrush/refs/heads/main/updates.xml
+    </link>
+    <description>Changes made to the Paintbrush revival application by Jarrod Norwell</description>
+    <language>en</language>
+    <item>
+      <title>Version 4.0</title>
+      <link>https://jarrodnorwell.com/apps/paintbrush</link>
+      <sparkle:version>4.0</sparkle:version>
+      <description>
+        
+      </description>
+      <pubDate>Thu, 13 Aug 2026 03:36:00 +0800</pubDate>
+      <enclosure url="https://github.com/jarrodnorwell/Paintbrush/releases/download/4.0/Paintbrush.dmg" type="application/octet-stream" sparkle:edSignature="CsWXWj3O7DLEcyFv5DO6fnLFJNqcgOZa9/WzYNM/bszdBCNVuY9SL7J57UZcpZMH7K2JNMAZbBI//lwLt//2CQ==" length="3081554" />
+    </item>
+  </channel>
+</rss>
