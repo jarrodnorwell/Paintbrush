@@ -97,5 +97,9 @@
 			<string>Binary</string>
 		</dict>
 	</array>
+	<key>SUFeedURL</key>
+	<string>https://raw.githubusercontent.com/jarrodnorwell/Paintbrush/refs/heads/main/updates.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>rdCohkXl47T3U2d4w7JQKNsASq+3B3ZkiXHmCvLAe0Y=</string>
 </dict>
 </plist>
