@@ -62,25 +62,24 @@
 
 - (id)initWithURL:(NSURL *)url
 {
-	// Temporary image to get dimensions
-    NSBitmapImageRep *tempImage = [[NSBitmapImageRep alloc] initWithData:[NSData dataWithContentsOfURL:url]];
-	
-	if (!tempImage)	// failure case
-		return nil;
-	
-	self = [self initWithSize:NSMakeSize([tempImage pixelsWide], [tempImage pixelsHigh])];
-	if (!self) {
-		return nil;
-	}
-	
-	// Copy the image to the mainImage
-	[SWImageTools drawToImage:mainImage fromImage:tempImage withComposition:NO];
-	
-	// Flip it, since our views are all flipped
-	if (mainImage)
-		[SWImageTools flipImageVertical:mainImage];		
-	
-	return self;
+    NSBitmapImageRep *tempImage = [NSBitmapImageRep imageRepWithContentsOfURL:url];
+    
+    if (!tempImage)    // failure case
+        return nil;
+    
+    // Run baseline initializer
+    self = [self initWithSize:NSMakeSize([tempImage pixelsWide], [tempImage pixelsHigh])];
+    if (!self)
+        return nil;
+    
+    // Copy the image to the mainImage
+    [SWImageTools drawToImage:mainImage fromImage:tempImage withComposition:NO];
+    
+    // Flip it, since our views are all flipped
+    if (mainImage)
+        [SWImageTools flipImageVertical:mainImage];
+    
+    return self;
 }
 
 

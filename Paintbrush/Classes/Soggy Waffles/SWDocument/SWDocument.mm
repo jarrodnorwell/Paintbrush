@@ -283,14 +283,12 @@ static BOOL kSWDocumentWillShowSheet = YES;
 }
 
 -(void) saveToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation completionHandler:(void (^)(NSError *))completionHandler {
-    NSLog(@"typeName = %@", typeName);
     [super saveToURL:url ofType:typeName forSaveOperation:saveOperation completionHandler:^(NSError *error) {
         if (error == nil && (saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation)) {
             NSURL *fileURL = [self fileURL];
             
             NSError *readError = nil;
             if (![self readFromURL:fileURL ofType:typeName error:&readError]) {
-                NSLog(@"readFromURL = %@", readError);
                 error = readError;
             } else {
                 [self->paintView setNeedsDisplay:YES];
@@ -315,7 +313,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
     NSData *data = nil;
     NSBitmapImageFileType fileType = NSBitmapImageFileTypePNG;
     
-    NSLog(@"fileType = %@", aType);
     if ([aType isEqualToString:@"bmp"])
         fileType = NSBitmapImageFileTypeBMP;
     else if ([aType isEqualToString:@"png"])
@@ -357,7 +354,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 						 originalContentsURL:(NSURL *)absoluteOriginalContentsURL
 									   error:(NSError **)outError
 {
-    NSLog(@"typeName2 = %@", typeName);
     NSMutableDictionary *fileAttributes = [[super fileAttributesToWriteToURL:absoluteURL
 																	  ofType:typeName 
 															forSaveOperation:saveOperation
