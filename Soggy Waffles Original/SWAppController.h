@@ -24,7 +24,8 @@
 
 extern NSString * const kSWUndoKey;
 
-@interface SWAppController : NSObject <NSMenuItemValidation> {
+@interface SWAppController : NSObject
+{
 	SWPreferenceController *preferenceController;
 }
 - (IBAction)showPreferencePanel:(id)sender;

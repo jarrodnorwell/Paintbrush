@@ -40,19 +40,9 @@ NSString * const kSWUndoKey = @"UndoLevels";
 
 	// NOTE: 10.5.3 is version 949.33
 	if (floor(NSAppKitVersionNumber) <= NSAppKitVersionNumber10_4) {
-		// Pop up a warning dialog...
-        NSAlert *alert = [[NSAlert alloc] init];
-
-        [alert setMessageText:@"Sorry, this program requires macOS 10.5.3 or later"];
-        [alert setInformativeText:[NSString stringWithFormat:@"You are running %@",
-                                   [[NSProcessInfo processInfo] operatingSystemVersionString]]];
-
-        [alert addButtonWithTitle:@"OK"];
-
-        [alert runModal];
-
-        [alert release];
-        
+		// Pop up a warning dialog... 
+		NSRunAlertPanel(@"Sorry, this program requires Mac OS X 10.5.3 or later", @"You are running %@", 
+						@"OK", nil, nil, [[[NSProcessInfo alloc] operatingSystemVersionString] autorelease]);
 		DebugLog(@"Failed to run: running version %lf", NSAppKitVersionNumber);
 		// then quit the program
 		[NSApp terminate:self]; 
@@ -72,7 +62,7 @@ NSString * const kSWUndoKey = @"UndoLevels";
 		[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];		
 
 		[[NSColorPanel sharedColorPanel] setShowsAlpha:YES];
-        [NSColorPanel setPickerMode:NSColorPanelModeCrayon];
+		[NSColorPanel setPickerMode:NSCrayonModeColorPanel];
 		[[SWToolboxController sharedToolboxPanelController] showWindow:self];
 	}
 	
@@ -131,7 +121,7 @@ NSString * const kSWUndoKey = @"UndoLevels";
 
 #ifndef APPSTORE
 // Called immediately before relaunching by Sparkle
-- (void)updaterWillRelaunchApplication:(SPUUpdater *)updater
+- (void)updaterWillRelaunchApplication:(SUUpdater *)updater
 {
 	[self killTheSheet:nil];
 }
@@ -154,7 +144,8 @@ NSString * const kSWUndoKey = @"UndoLevels";
 	}
 }
 
--(BOOL) validateMenuItem:(NSMenuItem *)menuItem {
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
 	SEL action = [menuItem action];
 	if (action == @selector(newFromClipboard:)) {
 		return ([SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);

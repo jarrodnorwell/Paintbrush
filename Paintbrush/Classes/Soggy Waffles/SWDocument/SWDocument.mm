@@ -21,8 +21,6 @@
 
 #import "SWDocument.h"
 #import "SWPaintView.h"
-#import "SWScalingScrollView.h"
-#import "SWCenteringClipView.h"
 #import "SWToolbox.h"
 #import "SWToolboxController.h"
 #import "SWTextToolWindowController.h"
@@ -34,6 +32,8 @@
 #import "SWPrintPanelAccessoryController.h"
 #import "SWImageDataSource.h"
 #import "SWImageTools.h"
+
+#import "Paintbrush-Swift.h"
 
 #include <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
@@ -54,7 +54,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		nc = [NSNotificationCenter defaultCenter];
 		[nc addObserver:self
 			   selector:@selector(showTextSheet:)
-				   name:@"SWText"
+				   name:@"textNotificationName"
 				 object:nil];
 		[nc addObserver:self 
 			   selector:@selector(undoLevelChanged:) 
@@ -100,18 +100,19 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 	toolboxController = [SWToolboxController sharedToolboxPanelController];
 	
-	clipView = [[SWCenteringClipView alloc] initWithFrame:[[scrollView contentView] frame]];
+	clipView = [[SWJNCenteringClipView alloc] initWithFrame:[[scrollView contentView] frame]];
 	//[clipView setBackgroundColor:[NSColor windowBackgroundColor]];
 	
 	// The Scroll View contains the clip view, which is the superclass of the paint view (whew!)
 	[scrollView setContentView:(NSClipView *)clipView];
 	[clipView setDocumentView:paintView];
-	[scrollView setScaleFactor:1.0 adjustPopup:YES];
+    [scrollView setScaleTo:1.0 adjustingScalePushButton:YES];
 	
+    // TODO: remove this?
 	// Get and set the background image of the clip view
-	NSImage *bgImage = [NSImage imageNamed:@"bgImage"];
-	if (bgImage)
-		[clipView setBgImagePattern:bgImage];
+	// NSImage *bgImage = [NSImage imageNamed:@"bgImage"];
+	// if (bgImage)
+	// 	[clipView setBgImagePattern:bgImage];
 		
 	// If the user opened an image
 	if (dataSource) 
@@ -223,7 +224,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
                 if (self->dataSource.size.width != newSize.width || self->dataSource.size.height != newSize.height)
                 {
                     // This is also important!
-                    [self->toolbox tieUpLooseEndsForCurrentTool];
+                    [self->toolbox finaliseForCurrentTool];
 
                     [self handleUndoWithImageData:nil frame:NSZeroRect];
                     
@@ -263,7 +264,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		
 		// Assigns the current front color (according to the sharedColorPanel) 
 		// to the frontColor reference
-		[[NSColorPanel sharedColorPanel] setColor:[n object]];
+		[[NSColorPanel sharedColorPanel] setColor:toolbox.currentTool.foregroundColor];
 		
 	}
 }
@@ -278,7 +279,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Override to ensure that the user's file type is set
 - (IBAction)saveDocument:(id)sender
 {
-	[toolbox tieUpLooseEndsForCurrentTool];
+	[toolbox finaliseForCurrentTool];
     [super saveDocument:sender];
 }
 
@@ -594,9 +595,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
         // As always, flip the image to be viewed in our flipped view
         [SWImageTools flipImageVertical:[dataSource bufferImage]];
 
-        SWTool *oldTool = [toolbox currentTool];
+        SWJNTool *oldTool = [toolbox currentTool];
         
-        [toolbox setCurrentTool:[toolbox toolForLabel:@"SWSelectionTool"]];
+        [toolbox setCurrentTool:[toolbox toolForLabel:@"Selection"]]; // should be this?
         [(SWSelectionTool *)[toolbox currentTool] setClippingRect:rect
                                                          forImage:[dataSource bufferImage]
                                                     withMainImage:[dataSource mainImage]];
@@ -612,10 +613,9 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[toolboxController switchToScissors:nil];
 	
 	[[toolbox currentTool] setSavedPoint:NSZeroPoint];
-	[[toolbox currentTool] performDrawAtPoint:NSMakePoint([paintView bounds].size.width, [paintView bounds].size.height)
-								withMainImage:[dataSource mainImage] 
-								  bufferImage:[dataSource bufferImage] 
-								   mouseEvent:MOUSE_UP];
+    void([toolbox.currentTool performDrawFrom:NSMakePoint(paintView.bounds.size.width, paintView.bounds.size.height)
+                                           on:dataSource.mainImage and:dataSource.bufferImage
+                                          for:SWJNMouseEventUp]);
 	
 	// [paintView cursorUpdate:[NSApp currentEvent]]; // TODO: (jarrodnorwell) check this
 	[paintView setNeedsDisplay:YES];
@@ -624,33 +624,39 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 - (IBAction)zoomIn:(id)sender
 {
-	if ([sender isKindOfClass:[SWTool class]]) {
+	if ([sender isKindOfClass:[SWJNTool class]]) {
 		// Came from the zoom tool, so get its point
-		NSPoint point = [(SWTool *)sender savedPoint];
-		[scrollView setScaleFactor:([scrollView scaleFactor] * 2) atPoint:point adjustPopup:YES];
+		NSPoint point = [(SWJNTool *)sender savedPoint];
+        if ([scrollView scaleUp])
+            [scrollView setScaleTo:scrollView.scale * 2 at:point adjustingScalePushButton:YES];
+		// [scrollView setScaleFactor:([scrollView scaleFactor] * 2) atPoint:point adjustPopup:YES];
 	} else {
 		// Came from somewhere else (probably an NSMenuItem)
-		[scrollView setScaleFactor:([scrollView scaleFactor] * 2) adjustPopup:YES];
+        if ([scrollView scaleUp])
+            [scrollView setScaleTo:scrollView.scale * 2 adjustingScalePushButton:YES];
 	}
 }
 
 
 - (IBAction)zoomOut:(id)sender
 {
-	if ([sender isKindOfClass:[SWTool class]]) {
+	if ([sender isKindOfClass:[SWJNTool class]]) {
 		// Came from the zoom tool, so get its point
-		NSPoint point = [(SWTool *)sender savedPoint];
-		[scrollView setScaleFactor:([scrollView scaleFactor] / 2) atPoint:point adjustPopup:YES];
+		NSPoint point = [(SWJNTool *)sender savedPoint];
+        if ([scrollView scaleDown])
+            [scrollView setScaleTo:scrollView.scale / 2 at:point adjustingScalePushButton:YES];
 	} else {
 		// Came from somewhere else (probably an NSMenuItem)
-		[scrollView setScaleFactor:([scrollView scaleFactor] / 2) adjustPopup:YES];
+        if ([scrollView scaleDown])
+            [scrollView setScaleTo:scrollView.scale / 2 adjustingScalePushButton:YES];
 	}
 }
 
 
 - (IBAction)actualSize:(id)sender
 {
-	[scrollView setScaleFactor:1 adjustPopup:YES];
+    [scrollView scaleToDefault];
+    [scrollView setScaleTo:1.0 adjustingScalePushButton:YES];
 }
 
 
@@ -686,11 +692,11 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		return paste;
 	}
 	else if (action == @selector(zoomIn:))
-		return [scrollView scaleFactor] < 16;
+		return scrollView.scale < 16;
 	else if (action == @selector(zoomOut:))
-		return [scrollView scaleFactor] > 0.25;
+		return scrollView.scale > 0.25;
 	else if (action == @selector(showGrid:))
-		return [scrollView scaleFactor] > 2.0;
+		return scrollView.scale > 2.0;
 	else if (action == @selector(newFromClipboard:))
 		return YES;
 	else
@@ -748,7 +754,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		NSBitmapImageRep *croppedImage = [(SWSelectionTool *)[toolbox currentTool] selectedImage];
 		
 		// This is also important!
-		[toolbox tieUpLooseEndsForCurrentTool];
+		[toolbox finaliseForCurrentTool];
 		
 		[self handleUndoWithImageData:nil frame:NSZeroRect];
 				

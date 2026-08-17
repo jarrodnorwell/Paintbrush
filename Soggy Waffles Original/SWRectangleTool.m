@@ -26,7 +26,7 @@
 {
 	path = [NSBezierPath bezierPath];
 	[path setLineWidth:lineWidth];
-    [path setLineCapStyle:NSLineCapStyleSquare];
+	[path setLineCapStyle:NSSquareLineCapStyle];
 	[path moveToPoint:begin];
 	if (lineWidth <= 1) 
 	{
@@ -35,10 +35,10 @@
 		end.x += 0.5;
 		end.y += 0.5;
 	}
-    if (flags & NSEventModifierFlagShift) {
-        CGFloat size = fmin(fabs(end.x-begin.x),fabs(end.y-begin.y));
-        NSInteger x = (end.x-begin.x) / fabs(end.x-begin.x);
-        NSInteger y = (end.y-begin.y) / fabs(end.y-begin.y);
+	if (flags & NSShiftKeyMask) {
+		CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
+		NSInteger x = (end.x-begin.x) / abs(end.x-begin.x);
+		NSInteger y = (end.y-begin.y) / abs(end.y-begin.y);
 		[path appendBezierPathWithRect:NSMakeRect(begin.x, begin.y, x*size, y*size)];
 	} else {
 		[path appendBezierPathWithRect:NSMakeRect(begin.x, begin.y, (end.x - begin.x), (end.y - begin.y))];
@@ -70,7 +70,7 @@
 	
 	// Which colors should we draw with?
 	if (event == MOUSE_DOWN) {
-        if (flags & NSEventModifierFlagOption) {
+		if (flags & NSAlternateKeyMask) {
 			primaryColor = backColor;
 			secondaryColor = frontColor;
 		} else {

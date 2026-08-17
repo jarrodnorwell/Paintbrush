@@ -22,13 +22,13 @@
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
 @class SWPaintView;
-@class SWScalingScrollView;
+@class SWJNScalingScrollView;
 @class SWTool;
 @class SWToolbox;
 @class SWToolboxController;
 @class SWSizeWindowController;
 @class SWResizeWindowController;
-@class SWCenteringClipView;
+@class SWJNCenteringClipView;
 @class SWTextToolWindowController;
 @class SWSavePanelAccessoryController;
 @class SWImageDataSource;
@@ -36,7 +36,7 @@
 @interface SWDocument : NSDocument
 {
 	IBOutlet SWPaintView *paintView;
-	IBOutlet SWScalingScrollView *scrollView;	/* ScrollView containing document */
+	IBOutlet SWJNScalingScrollView *scrollView;	/* ScrollView containing document */
 	
 	// The image data
 	SWImageDataSource * dataSource;
@@ -44,7 +44,7 @@
 	// A bunch of controllers and one view
 	SWToolboxController *toolboxController;
 	SWToolbox *toolbox;
-	SWCenteringClipView *clipView;
+	SWJNCenteringClipView *clipView;
 	SWTextToolWindowController *textController;
 	SWSizeWindowController *sizeController;
 	SWResizeWindowController *resizeController;

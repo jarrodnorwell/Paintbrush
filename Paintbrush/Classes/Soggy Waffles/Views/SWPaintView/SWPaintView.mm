@@ -19,14 +19,14 @@
 
 #import "SWImageTools.h"
 #import "SWPaintView.h"
-#import "SWCenteringClipView.h"
-#import "SWScalingScrollView.h"
 #import "SWToolList.h"
 #import "SWToolbox.h"
 #import "SWToolboxController.h"
 #import "SWAppController.h"
 #import "SWDocument.h"
 #import "SWImageDataSource.h"
+
+#import "Paintbrush-Swift.h"
 
 @implementation SWPaintView
 
@@ -135,7 +135,7 @@
 		//CGContextEndTransparencyLayer(cgContext);
 		
 		// If the grid is turned on, draw that too (but only after everything else!
-		if (showsGrid && [(SWScalingScrollView *)[[self superview] superview] scaleFactor] > 2.0) 
+		if (showsGrid && [(SWJNScalingScrollView *)[[self superview] superview] scale] > 2.0)
 		{
 			[gridColor set];
 			[[NSGraphicsContext currentContext] setShouldAntialias:NO];
@@ -198,16 +198,16 @@
 	currentPoint.x = floor(downPoint.x);
 	currentPoint.y = floor(downPoint.y);
 
-	[[toolbox currentTool] setSavedPoint:currentPoint];
+    toolbox.currentTool.savedPoint = currentPoint;
+	// [[toolbox currentTool] setSavedPoint:currentPoint];
 	
 	// If it's shifted, do something about it
-	[[toolbox currentTool] setFlags:[event modifierFlags]];
-	[[toolbox currentTool] performDrawAtPoint:currentPoint 
-					  withMainImage:[dataSource mainImage]
-						bufferImage:[dataSource bufferImage]
-						 mouseEvent:MOUSE_DOWN];
+	toolbox.currentTool.flags = event.modifierFlags;
+    void([toolbox.currentTool performDrawFrom:currentPoint
+                                           on:dataSource.mainImage and:dataSource.bufferImage
+                                          for:SWJNMouseEventDown]);
 	
-	[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
+	[self setNeedsDisplayInRect:toolbox.currentTool.invalidRect];
 }
 
 - (void)mouseDragged:(NSEvent *)event
@@ -221,13 +221,12 @@
 		currentPoint.x = floor(dragPoint.x);
 		currentPoint.y = floor(dragPoint.y);
 		
-		[[toolbox currentTool] setFlags:[event modifierFlags]];
-		[[toolbox currentTool] performDrawAtPoint:currentPoint 
-									withMainImage:[dataSource mainImage]
-									  bufferImage:[dataSource bufferImage]
-									   mouseEvent:MOUSE_DRAGGED];
+		toolbox.currentTool.flags = event.modifierFlags;
+        void([toolbox.currentTool performDrawFrom:currentPoint
+                                               on:dataSource.mainImage and:dataSource.bufferImage
+                                              for:SWJNMouseEventDragged]);
 		
-		[self setNeedsDisplayInRect:[[toolbox currentTool] invalidRect]];
+		[self setNeedsDisplayInRect:toolbox.currentTool.invalidRect];
 	}
 }
 
@@ -241,11 +240,10 @@
 		// Necessary for when the view is zoomed above 100%
 		currentPoint.x = floor(upPoint.x);
 		currentPoint.y = floor(upPoint.y);
-		[[toolbox currentTool] setFlags:[event modifierFlags]];
-		NSBezierPath *path = [[toolbox currentTool] performDrawAtPoint:currentPoint 
-														 withMainImage:[dataSource mainImage]
-														   bufferImage:[dataSource bufferImage]
-															mouseEvent:MOUSE_UP];
+        toolbox.currentTool.flags = event.modifierFlags;
+        NSBezierPath *path = [toolbox.currentTool performDrawFrom:currentPoint
+                                                               on:dataSource.mainImage and:dataSource.bufferImage
+                                                              for:SWJNMouseEventUp];
 		
 		if (path) {
 			expPath = path;
@@ -258,8 +256,7 @@
 // We want right-clicks to result in the use of the background color
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-	NSUInteger flags = [theEvent modifierFlags] | 
-    ([[toolbox currentTool] shouldShowContextualMenu] ? NSEventModifierFlagControl : NSEventModifierFlagOption);
+	NSUInteger flags = [theEvent modifierFlags] | (toolbox.currentTool.showContextualMenu ? NSEventModifierFlagControl : NSEventModifierFlagOption);
 	
     NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSEventTypeLeftMouseDown
 												location:[theEvent locationInWindow] 
@@ -275,8 +272,7 @@
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
-	NSUInteger flags = [theEvent modifierFlags] | 
-    ([[toolbox currentTool] shouldShowContextualMenu] ? NSEventModifierFlagControl : NSEventModifierFlagOption);
+	NSUInteger flags = [theEvent modifierFlags] | (toolbox.currentTool.showContextualMenu ? NSEventModifierFlagControl : NSEventModifierFlagOption);
 	
     NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSEventTypeLeftMouseDragged
 												location:[theEvent locationInWindow] 
@@ -292,8 +288,7 @@
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
-	NSUInteger flags = [theEvent modifierFlags] | 
-    ([[toolbox currentTool] shouldShowContextualMenu] ? NSEventModifierFlagControl : NSEventModifierFlagOption);
+	NSUInteger flags = [theEvent modifierFlags] | (toolbox.currentTool.showContextualMenu ? NSEventModifierFlagControl : NSEventModifierFlagOption);
 	
     NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSEventTypeLeftMouseUp
 												location:[theEvent locationInWindow] 
@@ -317,7 +312,7 @@
 	// Necessary for when the view is zoomed above 100%
 	motionPoint.x = floor(motionPoint.x) + 0.5;
 	motionPoint.y = floor(motionPoint.y) + 0.5;	
-	[[toolbox currentTool] mouseHasMoved:motionPoint];
+	[toolbox.currentTool mouseDidMoveTo:motionPoint];
 }
 
 
@@ -344,7 +339,8 @@
 	if ([event keyCode] == 53) 
 	{
 		isPayingAttention = NO;
-		[toolbox tieUpLooseEndsForCurrentTool];
+		[toolbox finaliseForCurrentTool];
+        // [[SWJNImageTools shared] clearWithImage:dataSource.bufferImage in:NSZeroRect];
 		[SWImageTools clearImage:[dataSource bufferImage]];
 		[self setNeedsDisplay:YES];
 	} 
@@ -401,7 +397,7 @@
     }
 	
     //[gridPath setLineWidth:0.5];
-    [gridPath setLineWidth:(1.0 / [(SWScalingScrollView *)[[self superview] superview] scaleFactor])];
+    [gridPath setLineWidth:(1.0 / [(SWJNScalingScrollView *)[[self superview] superview] scale])];
     //[gridPath stroke];
 	return gridPath;
 }
@@ -459,9 +455,10 @@
 // Releases the overlay image, then tells the tool about it
 - (void)clearOverlay
 {
+    // [[SWJNImageTools shared] clearWithImage:dataSource.bufferImage in:NSZeroRect];
 	[SWImageTools clearImage:[dataSource bufferImage]];
-	[[toolbox currentTool] deleteKey];
-	[toolbox tieUpLooseEndsForCurrentTool];
+	[toolbox.currentTool deleteKey];
+	[toolbox finaliseForCurrentTool];
 	[self setNeedsDisplay:YES];
 }
 

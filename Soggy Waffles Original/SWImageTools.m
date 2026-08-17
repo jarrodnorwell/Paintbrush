@@ -53,7 +53,7 @@
 {
 	SWLockFocus(image);
 	[[NSColor clearColor] setFill];
-    NSRectFillUsingOperation(rect, NSCompositingOperationCopy);
+	NSRectFillUsingOperation(rect, NSCompositeCopy);
 	SWUnlockFocus(image);
 }
 
@@ -79,11 +79,11 @@
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:dest]];
 	if (shouldCompositeOver)
-        [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationSourceOver];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
 	else
-        [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationCopy];		
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];		
 //	[src draw];
-    CGContextDrawImage([[NSGraphicsContext currentContext] CGContext], 
+	CGContextDrawImage([[NSGraphicsContext currentContext] graphicsPort], 
 					   CGRectMake(point.x, point.y, [src pixelsWide], [src pixelsHigh]), [src CGImage]);
 	[NSGraphicsContext restoreGraphicsState];
 }
@@ -105,7 +105,7 @@
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bitmap]];
 	[transform concat];
-    [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationSourceOver];
+	[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
 	[tempImage draw];
 	[NSGraphicsContext restoreGraphicsState];
 	
@@ -129,7 +129,7 @@
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithBitmapImageRep:bitmap]];
 	[transform concat];
-    [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationSourceOver];
+	[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeSourceOver];
 	[tempImage draw];
 	[NSGraphicsContext restoreGraphicsState];
 	
@@ -149,7 +149,7 @@
 												   samplesPerPixel: 4 
 														  hasAlpha: YES 
 														  isPlanar: NO 
-													colorSpaceName: NSDeviceRGBColorSpace
+													colorSpaceName: NSCalibratedRGBColorSpace 
 													   bytesPerRow: 0	// "you figure it out"
 													  bitsPerPixel: 32];
 	// Initialize it to a completely transparent image
@@ -245,6 +245,8 @@
 + (BOOL)color:(NSColor *)c1 isEqualToColor:(NSColor *)c2
 {
 	CGFloat r1, r2, g1, g2, b1, b2, a1, a2;
+	DebugLog(@"%@", [c1 colorSpaceName]);
+	DebugLog(@"%@", [c2 colorSpaceName]);
 	[c1 getRed:&r1 green:&g1 blue:&b1 alpha:&a1];
 	[c2 getRed:&r2 green:&g2 blue:&b2 alpha:&a2];
 	
@@ -270,7 +272,7 @@
 	
 	// Get the components of the given NSColor
 	CGFloat colorRed, colorGreen, colorBlue, colorAlpha;
-	NSColor * convertedColor = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+	NSColor * convertedColor = [color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 	[convertedColor getRed:&colorRed green:&colorGreen blue:&colorBlue alpha:&colorAlpha];
 	
 	// Scale them up
@@ -313,9 +315,11 @@
 {
 	NSData *data = nil;
 	
-    if ([pb availableTypeFromArray:[NSArray arrayWithObject:NSPasteboardTypeTIFF]])
-        data = [pb dataForType:NSPasteboardTypeTIFF];
-    
+	if ([pb availableTypeFromArray:[NSArray arrayWithObject:NSTIFFPboardType]])
+		data = [pb dataForType:NSTIFFPboardType];
+	else if ([pb availableTypeFromArray:[NSArray arrayWithObject:NSPICTPboardType]])
+		data = [pb dataForType:NSPICTPboardType];
+
 	return data;
 }
 

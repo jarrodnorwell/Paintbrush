@@ -73,8 +73,8 @@
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 		
 		[NSGraphicsContext saveGraphicsState];
-        [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationCopy];
-        if (flags & NSEventModifierFlagOption)
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
+		if (flags & NSAlternateKeyMask)
 			[frontColor setStroke];
 		else
 			[backColor setStroke];	

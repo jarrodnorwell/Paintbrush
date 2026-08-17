@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="25095" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25094"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="25095"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SWToolboxController">
             <connections>
+                <outlet property="backgroundColorWell" destination="D2c-cU-Bj4" id="2sT-LX-e93"/>
+                <outlet property="foregroundColorWell" destination="MPs-95-2ke" id="E5M-cn-eKL"/>
                 <outlet property="imageView" destination="is3-z9-xYr" id="KJW-UG-xcN"/>
                 <outlet property="previousButton" destination="kii-SI-Vt7" id="fi0-X9-hwh"/>
                 <outlet property="window" destination="MHb-ug-OGY" id="Wfr-1N-2ao"/>
@@ -14,214 +17,214 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" id="MHb-ug-OGY" userLabel="Toolbox" customClass="SWToolboxPanel">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="MHb-ug-OGY" userLabel="Toolbox" customClass="SWJNToolboxPanel" customModule="Paintbrush" customModuleProvider="target">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES" nonactivatingPanel="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="173" y="116" width="122" height="763"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1084"/>
             <view key="contentView" id="uYf-p6-eSp">
-                <rect key="frame" x="0.0" y="0.0" width="122" height="708"/>
+                <rect key="frame" x="0.0" y="0.0" width="108" height="631"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button toolTip="Brush" translatesAutoresizingMaskIntoConstraints="NO" id="kii-SI-Vt7" customClass="SWButton">
-                        <rect key="frame" x="20" y="648.5" width="36.5" height="44"/>
+                    <button toolTip="Brush" translatesAutoresizingMaskIntoConstraints="NO" id="kii-SI-Vt7">
+                        <rect key="frame" x="20" y="578.5" width="29.5" height="37"/>
                         <buttonCell key="cell" type="square" title="Brush" bezelStyle="shadowlessSquare" image="paintbrush.pointed" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="QYP-f1-KBU">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <color key="contentTintColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="BkA-pA-Dz0"/>
-                            <constraint firstAttribute="height" constant="36" id="Q4n-9W-aqd"/>
+                            <constraint firstAttribute="width" constant="29" id="BkA-pA-Dz0"/>
+                            <constraint firstAttribute="height" constant="29" id="Q4n-9W-aqd"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="SSS-Jr-ARB"/>
                         </connections>
                     </button>
-                    <button toolTip="Eraser" translatesAutoresizingMaskIntoConstraints="NO" id="uw3-zI-GkQ" customClass="SWButton">
-                        <rect key="frame" x="66" y="649" width="36" height="43"/>
+                    <button toolTip="Eraser" translatesAutoresizingMaskIntoConstraints="NO" id="uw3-zI-GkQ">
+                        <rect key="frame" x="59" y="579" width="29" height="36"/>
                         <buttonCell key="cell" type="square" title="Eraser" bezelStyle="shadowlessSquare" image="eraser" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="d4d-MB-eOl">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="2gi-uD-Wuk"/>
-                            <constraint firstAttribute="height" constant="36" id="pPi-xD-T4f"/>
+                            <constraint firstAttribute="width" constant="29" id="2gi-uD-Wuk"/>
+                            <constraint firstAttribute="height" constant="29" id="pPi-xD-T4f"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="KXi-BD-YQE"/>
                         </connections>
                     </button>
-                    <button toolTip="Selection" translatesAutoresizingMaskIntoConstraints="NO" id="hXf-Od-CeZ" customClass="SWButton">
-                        <rect key="frame" x="20" y="603.5" width="36" height="41"/>
+                    <button toolTip="Selection" translatesAutoresizingMaskIntoConstraints="NO" id="hXf-Od-CeZ">
+                        <rect key="frame" x="20" y="540.5" width="29" height="34"/>
                         <buttonCell key="cell" type="square" title="Selection" bezelStyle="shadowlessSquare" image="rectangle.dashed" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="iNy-6f-gTp">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="00Z-se-lh7"/>
-                            <constraint firstAttribute="height" constant="36" id="ebb-cl-WFp"/>
+                            <constraint firstAttribute="width" constant="29" id="00Z-se-lh7"/>
+                            <constraint firstAttribute="height" constant="29" id="ebb-cl-WFp"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="VIy-ao-api"/>
                         </connections>
                     </button>
-                    <button toolTip="Airbrush" translatesAutoresizingMaskIntoConstraints="NO" id="IcN-Cr-8nL" customClass="SWButton">
-                        <rect key="frame" x="66" y="604" width="36" height="41"/>
+                    <button toolTip="Airbrush" translatesAutoresizingMaskIntoConstraints="NO" id="IcN-Cr-8nL">
+                        <rect key="frame" x="59" y="541" width="29" height="34"/>
                         <buttonCell key="cell" type="square" title="Airbrush" bezelStyle="shadowlessSquare" image="wind" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="ZDY-XB-3Ra">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="5JZ-CT-qNb"/>
-                            <constraint firstAttribute="width" constant="36" id="KlU-Hf-f5Y"/>
+                            <constraint firstAttribute="height" constant="29" id="5JZ-CT-qNb"/>
+                            <constraint firstAttribute="width" constant="29" id="KlU-Hf-f5Y"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="JYf-gx-u0r"/>
                         </connections>
                     </button>
-                    <button toolTip="Fill" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-b4-cc1" customClass="SWButton">
-                        <rect key="frame" x="20" y="557" width="36" height="42"/>
+                    <button toolTip="Fill" translatesAutoresizingMaskIntoConstraints="NO" id="wJy-b4-cc1">
+                        <rect key="frame" x="20" y="501" width="29" height="35"/>
                         <buttonCell key="cell" type="square" title="Fill" bezelStyle="shadowlessSquare" image="drop.circle" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="QJa-cb-Pqz">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="Iqd-j5-RNT"/>
-                            <constraint firstAttribute="height" constant="36" id="Jhd-ip-BN5"/>
+                            <constraint firstAttribute="width" constant="29" id="Iqd-j5-RNT"/>
+                            <constraint firstAttribute="height" constant="29" id="Jhd-ip-BN5"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="edz-Ra-4p2"/>
                         </connections>
                     </button>
-                    <button toolTip="Bomb" translatesAutoresizingMaskIntoConstraints="NO" id="Rig-vi-ChS" customClass="SWButton">
-                        <rect key="frame" x="66" y="557" width="36" height="42"/>
+                    <button toolTip="Bomb" translatesAutoresizingMaskIntoConstraints="NO" id="Rig-vi-ChS">
+                        <rect key="frame" x="59" y="501" width="29" height="35"/>
                         <buttonCell key="cell" type="square" title="Bomb" bezelStyle="shadowlessSquare" image="trash.circle" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="igw-MI-bwO">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="E8s-0a-jWW"/>
-                            <constraint firstAttribute="height" constant="36" id="w4Y-l4-82r"/>
+                            <constraint firstAttribute="width" constant="29" id="E8s-0a-jWW"/>
+                            <constraint firstAttribute="height" constant="29" id="w4Y-l4-82r"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="X2A-E6-3b8"/>
                         </connections>
                     </button>
-                    <button toolTip="Line" translatesAutoresizingMaskIntoConstraints="NO" id="LOB-aY-HPg" customClass="SWButton">
-                        <rect key="frame" x="20" y="512.5" width="36.5" height="40"/>
+                    <button toolTip="Line" translatesAutoresizingMaskIntoConstraints="NO" id="LOB-aY-HPg">
+                        <rect key="frame" x="20" y="463.5" width="29.5" height="33"/>
                         <buttonCell key="cell" type="square" title="Line" bezelStyle="shadowlessSquare" image="line.diagonal" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="9WL-EC-gnt">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="9aw-PY-QvA"/>
-                            <constraint firstAttribute="height" constant="36" id="W4o-iu-Pls"/>
+                            <constraint firstAttribute="width" constant="29" id="9aw-PY-QvA"/>
+                            <constraint firstAttribute="height" constant="29" id="W4o-iu-Pls"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="LSr-q0-E0r"/>
                         </connections>
                     </button>
-                    <button toolTip="Curve" translatesAutoresizingMaskIntoConstraints="NO" id="rdP-TV-oe7" customClass="SWButton">
-                        <rect key="frame" x="66" y="510.5" width="36.5" height="43"/>
+                    <button toolTip="Curve" translatesAutoresizingMaskIntoConstraints="NO" id="rdP-TV-oe7">
+                        <rect key="frame" x="59" y="461.5" width="29.5" height="36"/>
                         <buttonCell key="cell" type="square" title="Curve" bezelStyle="shadowlessSquare" image="point.topleft.down.to.point.bottomright.curvepath" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="flx-fP-oyx">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="gMq-7c-Dz9"/>
-                            <constraint firstAttribute="width" constant="36" id="t6C-YQ-LFE"/>
+                            <constraint firstAttribute="height" constant="29" id="gMq-7c-Dz9"/>
+                            <constraint firstAttribute="width" constant="29" id="t6C-YQ-LFE"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="axn-rE-TYB"/>
                         </connections>
                     </button>
-                    <button toolTip="Rectangle" translatesAutoresizingMaskIntoConstraints="NO" id="5QL-qO-r1T" customClass="SWButton">
-                        <rect key="frame" x="20" y="465.5" width="36" height="41"/>
+                    <button toolTip="Rectangle" translatesAutoresizingMaskIntoConstraints="NO" id="5QL-qO-r1T">
+                        <rect key="frame" x="20" y="423.5" width="29" height="34"/>
                         <buttonCell key="cell" type="square" title="Rectangle" bezelStyle="shadowlessSquare" image="rectangle" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="9SC-Tk-hUU">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="B6R-zy-juc"/>
-                            <constraint firstAttribute="height" constant="36" id="mMb-Qe-BQT"/>
+                            <constraint firstAttribute="width" constant="29" id="B6R-zy-juc"/>
+                            <constraint firstAttribute="height" constant="29" id="mMb-Qe-BQT"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="vvs-P7-Awa"/>
                         </connections>
                     </button>
-                    <button toolTip="Ellipse" translatesAutoresizingMaskIntoConstraints="NO" id="xPq-us-Lqb" customClass="SWButton">
-                        <rect key="frame" x="66" y="465.5" width="36.5" height="42"/>
+                    <button toolTip="Ellipse" translatesAutoresizingMaskIntoConstraints="NO" id="xPq-us-Lqb">
+                        <rect key="frame" x="59" y="423.5" width="29.5" height="35"/>
                         <buttonCell key="cell" type="square" title="Ellipse" bezelStyle="shadowlessSquare" image="oval" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="IUY-Jj-lZB">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="0q2-Ty-TRG"/>
-                            <constraint firstAttribute="height" constant="36" id="wMh-CK-v1H"/>
+                            <constraint firstAttribute="width" constant="29" id="0q2-Ty-TRG"/>
+                            <constraint firstAttribute="height" constant="29" id="wMh-CK-v1H"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="yz4-1J-ept"/>
                         </connections>
                     </button>
-                    <button toolTip="Rounded Rectangle" translatesAutoresizingMaskIntoConstraints="NO" id="128-tP-lyF" customClass="SWButton">
-                        <rect key="frame" x="20" y="420" width="36" height="41"/>
+                    <button toolTip="Rounded Rectangle" translatesAutoresizingMaskIntoConstraints="NO" id="128-tP-lyF">
+                        <rect key="frame" x="20" y="385" width="29" height="34"/>
                         <buttonCell key="cell" type="square" title="Rounded Rectangle" bezelStyle="shadowlessSquare" image="button.roundedtop.horizontal" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="aKQ-xc-GTW">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="1Zo-j5-ZOy"/>
-                            <constraint firstAttribute="height" constant="36" id="TVj-1L-lf6"/>
+                            <constraint firstAttribute="width" constant="29" id="1Zo-j5-ZOy"/>
+                            <constraint firstAttribute="height" constant="29" id="TVj-1L-lf6"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="Tge-Zj-DYi"/>
                         </connections>
                     </button>
-                    <button toolTip="Text" translatesAutoresizingMaskIntoConstraints="NO" id="XkK-jv-VnH" customClass="SWButton">
-                        <rect key="frame" x="66" y="421" width="36" height="39"/>
+                    <button toolTip="Text" translatesAutoresizingMaskIntoConstraints="NO" id="XkK-jv-VnH">
+                        <rect key="frame" x="59" y="386" width="29" height="32"/>
                         <buttonCell key="cell" type="square" title="Text" bezelStyle="shadowlessSquare" image="textformat" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="MGN-Xz-6Gp">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="UnE-mq-Eqr"/>
-                            <constraint firstAttribute="height" constant="36" id="dyn-oT-k5V"/>
+                            <constraint firstAttribute="width" constant="29" id="UnE-mq-Eqr"/>
+                            <constraint firstAttribute="height" constant="29" id="dyn-oT-k5V"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="P7B-gZ-unR"/>
                         </connections>
                     </button>
-                    <button toolTip="Eyedropper" translatesAutoresizingMaskIntoConstraints="NO" id="ZCZ-c5-OnV" customClass="SWButton">
-                        <rect key="frame" x="20" y="373" width="36.5" height="43"/>
+                    <button toolTip="Eyedropper" translatesAutoresizingMaskIntoConstraints="NO" id="ZCZ-c5-OnV">
+                        <rect key="frame" x="20" y="345" width="29.5" height="36"/>
                         <buttonCell key="cell" type="square" title="Eyedropper" bezelStyle="shadowlessSquare" image="eyedropper" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="afC-ck-jWU">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="V5B-gq-840"/>
-                            <constraint firstAttribute="width" constant="36" id="cQf-Bc-Afw"/>
+                            <constraint firstAttribute="height" constant="29" id="V5B-gq-840"/>
+                            <constraint firstAttribute="width" constant="29" id="cQf-Bc-Afw"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="0g6-tK-Xwe"/>
                         </connections>
                     </button>
-                    <button toolTip="Zoom" translatesAutoresizingMaskIntoConstraints="NO" id="vKU-3H-lK0" customClass="SWButton">
-                        <rect key="frame" x="66" y="373.5" width="36.5" height="42"/>
+                    <button toolTip="Zoom" translatesAutoresizingMaskIntoConstraints="NO" id="vKU-3H-lK0">
+                        <rect key="frame" x="59" y="345.5" width="29.5" height="35"/>
                         <buttonCell key="cell" type="square" title="Zoom" bezelStyle="shadowlessSquare" image="magnifyingglass" catalog="system" imagePosition="only" alignment="center" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="0bj-Du-gFN">
                             <behavior key="behavior" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="oSN-TV-drU"/>
-                            <constraint firstAttribute="width" constant="36" id="p1k-EJ-Yhs"/>
+                            <constraint firstAttribute="height" constant="29" id="oSN-TV-drU"/>
+                            <constraint firstAttribute="width" constant="29" id="p1k-EJ-Yhs"/>
                         </constraints>
                         <connections>
                             <action selector="changeCurrentTool:" target="-2" id="hLo-kD-QbB"/>
                         </connections>
                     </button>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ySn-bN-tLX">
-                        <rect key="frame" x="18" y="343" width="86" height="16"/>
+                        <rect key="frame" x="18" y="315" width="72" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Fill Type" id="hFV-kz-ldh">
                             <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -229,7 +232,7 @@
                         </textFieldCell>
                     </textField>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AY4-4b-h4U">
-                        <rect key="frame" x="18" y="321" width="86" height="14"/>
+                        <rect key="frame" x="18" y="293" width="72" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="No Fill" id="ufU-He-hlk">
                             <font key="font" textStyle="subheadline" name=".SFNS-Regular"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -237,21 +240,21 @@
                         </textFieldCell>
                     </textField>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="dMC-LS-FGs">
-                        <rect key="frame" x="20" y="274.5" width="36" height="41"/>
+                        <rect key="frame" x="20" y="253.5" width="29" height="34"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="rectangle" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="lpz-qq-shc">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="K78-UO-DP5"/>
-                            <constraint firstAttribute="height" constant="36" id="nyG-02-u6M"/>
+                            <constraint firstAttribute="width" constant="29" id="K78-UO-DP5"/>
+                            <constraint firstAttribute="height" constant="29" id="nyG-02-u6M"/>
                         </constraints>
                         <connections>
                             <action selector="changeFillStyle:" target="-2" id="8Q2-PX-n1Z"/>
                         </connections>
                     </button>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pfp-fI-CmI">
-                        <rect key="frame" x="18" y="255" width="86" height="14"/>
+                        <rect key="frame" x="18" y="234" width="72" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Borderless" id="cky-Kq-VUh">
                             <font key="font" textStyle="subheadline" name=".SFNS-Regular"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -259,21 +262,21 @@
                         </textFieldCell>
                     </textField>
                     <button tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="4kj-fm-O0b">
-                        <rect key="frame" x="20" y="207" width="36" height="45"/>
+                        <rect key="frame" x="20" y="193" width="29" height="38"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="rectangle.slash" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="V36-2d-J9s">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="cL9-1A-wXz"/>
-                            <constraint firstAttribute="height" constant="36" id="iIm-em-atq"/>
+                            <constraint firstAttribute="width" constant="29" id="cL9-1A-wXz"/>
+                            <constraint firstAttribute="height" constant="29" id="iIm-em-atq"/>
                         </constraints>
                         <connections>
                             <action selector="changeFillStyle:" target="-2" id="HHJ-nj-cfW"/>
                         </connections>
                     </button>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eZd-pB-8dh">
-                        <rect key="frame" x="18" y="189" width="86" height="14"/>
+                        <rect key="frame" x="18" y="175" width="72" height="14"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Filled" id="MkA-R6-gbb">
                             <font key="font" textStyle="subheadline" name=".SFNS-Regular"/>
                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -281,21 +284,21 @@
                         </textFieldCell>
                     </textField>
                     <button tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="JS9-28-xeh">
-                        <rect key="frame" x="20" y="142.5" width="36" height="41"/>
+                        <rect key="frame" x="20" y="135.5" width="29" height="34"/>
                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="rectangle.fill" catalog="system" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="j3c-sj-Yke">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="Bt7-4t-lha"/>
-                            <constraint firstAttribute="width" constant="36" id="Z53-rF-p6r"/>
+                            <constraint firstAttribute="height" constant="29" id="Bt7-4t-lha"/>
+                            <constraint firstAttribute="width" constant="29" id="Z53-rF-p6r"/>
                         </constraints>
                         <connections>
                             <action selector="changeFillStyle:" target="-2" id="lCQ-zp-QGg"/>
                         </connections>
                     </button>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NOE-T6-kyr">
-                        <rect key="frame" x="18" y="112" width="86" height="16"/>
+                        <rect key="frame" x="18" y="105" width="72" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Line Width" id="Gre-hu-Hx5">
                             <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -303,7 +306,7 @@
                         </textFieldCell>
                     </textField>
                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mal-JX-8EK">
-                        <rect key="frame" x="18" y="64" width="86" height="16"/>
+                        <rect key="frame" x="18" y="57" width="72" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Colours" id="PAC-ho-Xfx">
                             <font key="font" textStyle="headline" name=".SFNS-Bold"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -311,29 +314,29 @@
                         </textFieldCell>
                     </textField>
                     <colorWell wellStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="MPs-95-2ke">
-                        <rect key="frame" x="20" y="20" width="36" height="36"/>
+                        <rect key="frame" x="20" y="20" width="29" height="29"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="KqU-s7-Ya2"/>
-                            <constraint firstAttribute="width" constant="36" id="dh5-Zc-6cM"/>
+                            <constraint firstAttribute="height" constant="29" id="KqU-s7-Ya2"/>
+                            <constraint firstAttribute="width" constant="29" id="dh5-Zc-6cM"/>
                         </constraints>
                         <color key="color" name="textColor" catalog="System" colorSpace="catalog"/>
                         <connections>
-                            <action selector="changeForegroundColor:" target="-2" id="rCf-iB-3Mv"/>
+                            <action selector="changeForegroundColor:" target="-2" id="van-Sk-6dR"/>
                         </connections>
                     </colorWell>
                     <colorWell wellStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="D2c-cU-Bj4">
-                        <rect key="frame" x="66" y="20" width="36" height="36"/>
+                        <rect key="frame" x="59" y="20" width="29" height="29"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="mXh-Nw-nlK"/>
-                            <constraint firstAttribute="width" constant="36" id="rqE-sd-g8I"/>
+                            <constraint firstAttribute="height" constant="29" id="mXh-Nw-nlK"/>
+                            <constraint firstAttribute="width" constant="29" id="rqE-sd-g8I"/>
                         </constraints>
                         <color key="color" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                         <connections>
-                            <action selector="changeBackgroundColor:" target="-2" id="9zy-OX-zgk"/>
+                            <action selector="changeBackgroundColor:" target="-2" id="D2G-80-9F4"/>
                         </connections>
                     </colorWell>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="is3-z9-xYr">
-                        <rect key="frame" x="86" y="85" width="16" height="22"/>
+                        <rect key="frame" x="72" y="78" width="16" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="ZWt-0x-fdf"/>
                             <constraint firstAttribute="width" constant="16" id="hwB-hC-C8H"/>
@@ -341,18 +344,18 @@
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="3.circle.fill" catalog="system" id="pNY-Qh-Zo0"/>
                         <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                     </imageView>
-                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RqN-az-h4G" customClass="SWSlider">
-                        <rect key="frame" x="20" y="88" width="58" height="16"/>
+                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RqN-az-h4G">
+                        <rect key="frame" x="20" y="81" width="44" height="16"/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="10" doubleValue="3" tickMarkPosition="below" numberOfTickMarks="10" allowsTickMarkValuesOnly="YES" sliderType="linear" id="VVk-hH-YMo"/>
                         <connections>
                             <action selector="changeLineWidth:" target="-2" id="wUD-3r-qEZ"/>
                         </connections>
                     </slider>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Als-Gh-8qv">
-                        <rect key="frame" x="12" y="365" width="98" height="5"/>
+                        <rect key="frame" x="12" y="337" width="84" height="5"/>
                     </box>
                     <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="SCi-PK-BKs">
-                        <rect key="frame" x="12" y="134" width="98" height="5"/>
+                        <rect key="frame" x="12" y="127" width="84" height="5"/>
                     </box>
                 </subviews>
                 <constraints>
@@ -362,7 +365,6 @@
                     <constraint firstItem="NOE-T6-kyr" firstAttribute="leading" secondItem="uYf-p6-eSp" secondAttribute="leading" constant="20" symbolic="YES" id="1LP-qI-KHu"/>
                     <constraint firstItem="D2c-cU-Bj4" firstAttribute="top" secondItem="Mal-JX-8EK" secondAttribute="bottom" constant="8" symbolic="YES" id="1e3-Un-8aY"/>
                     <constraint firstItem="vKU-3H-lK0" firstAttribute="leading" secondItem="ZCZ-c5-OnV" secondAttribute="trailing" constant="10" symbolic="YES" id="25t-hL-A19"/>
-                    <constraint firstItem="ySn-bN-tLX" firstAttribute="top" secondItem="Als-Gh-8qv" secondAttribute="bottom" constant="8" symbolic="YES" id="3Gh-Nr-cnm"/>
                     <constraint firstItem="IcN-Cr-8nL" firstAttribute="leading" secondItem="hXf-Od-CeZ" secondAttribute="trailing" constant="10" symbolic="YES" id="5ut-Eh-bFW"/>
                     <constraint firstAttribute="trailing" secondItem="Rig-vi-ChS" secondAttribute="trailing" constant="20" symbolic="YES" id="6pT-yu-kuq"/>
                     <constraint firstItem="ZCZ-c5-OnV" firstAttribute="leading" secondItem="uYf-p6-eSp" secondAttribute="leading" constant="20" symbolic="YES" id="7e6-dM-56P"/>
@@ -417,6 +419,7 @@
                     <constraint firstItem="is3-z9-xYr" firstAttribute="leading" secondItem="RqN-az-h4G" secondAttribute="trailing" constant="8" symbolic="YES" id="hPm-nB-j68"/>
                     <constraint firstAttribute="bottom" secondItem="MPs-95-2ke" secondAttribute="bottom" constant="20" symbolic="YES" id="iIQ-MF-88O"/>
                     <constraint firstAttribute="trailing" secondItem="vKU-3H-lK0" secondAttribute="trailing" constant="20" symbolic="YES" id="jdC-Ca-6VK"/>
+                    <constraint firstItem="ySn-bN-tLX" firstAttribute="top" secondItem="Als-Gh-8qv" secondAttribute="bottom" constant="8" symbolic="YES" id="jmK-Jp-v0A"/>
                     <constraint firstAttribute="trailing" secondItem="uw3-zI-GkQ" secondAttribute="trailing" constant="20" symbolic="YES" id="kfq-SQ-nfs"/>
                     <constraint firstItem="uw3-zI-GkQ" firstAttribute="top" secondItem="uYf-p6-eSp" secondAttribute="top" constant="20" symbolic="YES" id="lJB-lZ-B6I"/>
                     <constraint firstItem="JS9-28-xeh" firstAttribute="leading" secondItem="uYf-p6-eSp" secondAttribute="leading" constant="20" symbolic="YES" id="lUl-6U-sp9"/>
@@ -438,7 +441,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="KeS-8A-Xzd"/>
             </connections>
-            <point key="canvasLocation" x="291" y="377"/>
+            <point key="canvasLocation" x="291" y="376.5"/>
         </window>
     </objects>
     <resources>

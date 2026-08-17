@@ -15,7 +15,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="5" userLabel="Window">
+        <window title="Canvas" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="5" userLabel="Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="288" y="246" width="640" height="480"/>
@@ -23,9 +23,9 @@
             <value key="minSize" type="size" width="200" height="100"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="0.0" verticalLineScroll="10" verticalPageScroll="0.0" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31" customClass="SWScalingScrollView">
+                    <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="0.0" verticalLineScroll="10" verticalPageScroll="0.0" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31" customClass="SWJNScalingScrollView" customModule="Paintbrush" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
                         <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" copiesOnScroll="NO" id="HxO-GN-r6Y">
                             <rect key="frame" x="0.0" y="0.0" width="640" height="480"/>
@@ -38,7 +38,6 @@
                                     </connections>
                                 </customView>
                             </subviews>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="66">
                             <rect key="frame" x="0.0" y="463" width="640" height="17"/>
@@ -48,19 +47,63 @@
                             <rect key="frame" x="623" y="0.0" width="17" height="480"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
+                        <connections>
+                            <outlet property="scaleDownItem" destination="8r3-lc-IFJ" id="oHv-Nf-b5l"/>
+                            <outlet property="scalePushButton" destination="gin-LZ-Zsw" id="8rO-zQ-1Of"/>
+                            <outlet property="scaleUpItem" destination="wej-mk-8sI" id="Fll-GM-ft5"/>
+                        </connections>
                     </scrollView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="31" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="8E3-Li-kKM"/>
-                    <constraint firstAttribute="trailing" secondItem="31" secondAttribute="trailing" id="T2o-ov-yU4"/>
-                    <constraint firstItem="31" firstAttribute="top" secondItem="6" secondAttribute="top" id="kQX-fe-dSV"/>
-                    <constraint firstAttribute="bottom" secondItem="31" secondAttribute="bottom" id="sU0-zB-qht"/>
+                    <constraint firstItem="31" firstAttribute="top" secondItem="6" secondAttribute="top" id="CRK-Te-DZT"/>
+                    <constraint firstAttribute="bottom" secondItem="31" secondAttribute="bottom" id="Cb7-Pb-gDw"/>
+                    <constraint firstItem="31" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="LIx-d0-1ed"/>
+                    <constraint firstAttribute="trailing" secondItem="31" secondAttribute="trailing" id="u5d-FH-oag"/>
                 </constraints>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="6FCADA6E-E3C6-44D2-A9CA-E42E4ED23826" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="YhD-Ol-sK5">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="gpR-fk-zNQ"/>
+                    <toolbarItem implicitItemIdentifier="5265D999-AADD-44D4-A3F7-56503296D46D" label="Zoom In" paletteLabel="Zoom In" tag="-1" image="plus.magnifyingglass" catalog="system" bordered="YES" id="wej-mk-8sI">
+                        <size key="minSize" width="34" height="24"/>
+                        <size key="maxSize" width="34" height="24"/>
+                        <connections>
+                            <action selector="scaleUpWithItem:" target="31" id="6hh-rQ-Xoe"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="20753F63-A079-4BF7-AA29-8926A0BAA646" label="Zoom Out" paletteLabel="Zoom Out" tag="-1" image="minus.magnifyingglass" catalog="system" bordered="YES" id="8r3-lc-IFJ">
+                        <size key="minSize" width="34" height="24"/>
+                        <size key="maxSize" width="34" height="24"/>
+                        <connections>
+                            <action selector="scaleDownWithItem:" target="31" id="hgo-LZ-XBH"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="460BB537-9E85-4C33-B207-B8EE6BE451C4" label="Custom View" paletteLabel="Custom View" title="100%" sizingBehavior="auto" id="Uga-5H-ets">
+                        <nil key="toolTip"/>
+                        <button key="view" verticalHuggingPriority="750" id="gin-LZ-Zsw">
+                            <rect key="frame" x="0.0" y="14" width="82" height="24"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <buttonCell key="cell" type="push" title="100%" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XId-Cg-num">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="Uga-5H-ets"/>
+                    <toolbarItem reference="8r3-lc-IFJ"/>
+                    <toolbarItem reference="wej-mk-8sI"/>
+                </defaultToolbarItems>
+            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="17"/>
             </connections>
-            <point key="canvasLocation" x="139" y="141"/>
+            <point key="canvasLocation" x="139" y="140.5"/>
         </window>
     </objects>
+    <resources>
+        <image name="minus.magnifyingglass" catalog="system" width="16" height="15"/>
+        <image name="plus.magnifyingglass" catalog="system" width="16" height="15"/>
+    </resources>
 </document>

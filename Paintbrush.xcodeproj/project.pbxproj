@@ -12,6 +12,7 @@
 		E6956853302508670002CC7F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6956852302508670002CC7F /* Security.framework */; };
 		E69568553025086D0002CC7F /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E69568543025086D0002CC7F /* UniformTypeIdentifiers.framework */; };
 		E69568573025087A0002CC7F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E69568563025087A0002CC7F /* QuartzCore.framework */; };
+		E6D8CB293032505B004CFA2D /* TODO.md in Resources */ = {isa = PBXBuildFile; fileRef = E6D8CB283032505B004CFA2D /* TODO.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		E6956852302508670002CC7F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		E69568543025086D0002CC7F /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 		E69568563025087A0002CC7F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E6D8CB283032505B004CFA2D /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -27,6 +29,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				"Paintbrush-Bridging-Header.h",
 			);
 			target = E695672A3024F7D60002CC7F /* Paintbrush */;
 		};
@@ -60,6 +63,7 @@
 		E69567223024F7D60002CC7F = {
 			isa = PBXGroup;
 			children = (
+				E6D8CB283032505B004CFA2D /* TODO.md */,
 				E695672D3024F7D60002CC7F /* Paintbrush */,
 				E695684F3025085E0002CC7F /* Frameworks */,
 				E695672C3024F7D60002CC7F /* Products */,
@@ -130,6 +134,7 @@
 				TargetAttributes = {
 					E695672A3024F7D60002CC7F = {
 						CreatedOnToolsVersion = 27.0;
+						LastSwiftMigration = 2700;
 					};
 				};
 			};
@@ -159,6 +164,7 @@
 		E69567293024F7D60002CC7F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				E6D8CB293032505B004CFA2D /* TODO.md in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
@@ -298,6 +304,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++23";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 4.0;
@@ -337,7 +344,9 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Paintbrush/Paintbrush-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
 			};
@@ -349,6 +358,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++23";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 4.0;
@@ -388,6 +398,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Paintbrush/Paintbrush-Bridging-Header.h";
 				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;

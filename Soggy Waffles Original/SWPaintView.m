@@ -58,11 +58,11 @@
 	gridColor = [NSColor gridColor];
 	
 	// Ensure the correct cursor is displayed when opening a new document
-    [self cursorUpdate:[NSApp currentEvent]];
+	[self cursorUpdate:nil];
 	
 	// Set up drag stuff
 	[[self window] registerForDraggedTypes:[NSArray arrayWithObjects:
-                                            NSPasteboardTypeTIFF, nil]];
+											NSTIFFPboardType, nil]];
 	
 	[self setNeedsDisplay:YES];	
 }
@@ -95,9 +95,8 @@
 	NSRect tempRect = [[super window] frameRectForContentRect:frameRect];
 	NSPoint newOrigin = [[super window] frame].origin;
 	
-    // TODO: (jarrodnorwell) check this
-    tempRect.size.width += [NSScroller scrollerWidthForControlSize:NSControlSizeRegular scrollerStyle:[NSScroller preferredScrollerStyle]]; // [NSScroller scrollerWidth];
-    tempRect.size.height += [NSScroller scrollerWidthForControlSize:NSControlSizeRegular scrollerStyle:[NSScroller preferredScrollerStyle]]; // [NSScroller scrollerWidth];
+	tempRect.size.width += [NSScroller scrollerWidth];
+	tempRect.size.height += [NSScroller scrollerWidth];
 	
 	newOrigin.y += floor(0.5 * ([[super window] frame].size.height - tempRect.size.height));
 	newOrigin.x += floor(0.5 * ([[super window] frame].size.width - tempRect.size.width));
@@ -124,7 +123,7 @@
 
 		// If you don't do this, the image looks blurry when zoomed in
 		[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
-        CGContextRef cgContext = [[NSGraphicsContext currentContext] CGContext];
+		CGContextRef cgContext = [[NSGraphicsContext currentContext] graphicsPort];
 		NSBitmapImageRep *mainImage = [dataSource mainImage];
 		NSBitmapImageRep *bufferImage = [dataSource bufferImage];
 		
@@ -268,14 +267,14 @@
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
 	NSUInteger flags = [theEvent modifierFlags] | 
-    ([[toolbox currentTool] shouldShowContextualMenu] ? NSEventModifierFlagControl : NSEventModifierFlagOption);
+		([[toolbox currentTool] shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
 	
-    NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSEventTypeLeftMouseDown
+	NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSLeftMouseDown
 												location:[theEvent locationInWindow] 
 										   modifierFlags:flags
 											   timestamp:[theEvent timestamp]
 											windowNumber:[theEvent windowNumber]
-												 context:[NSGraphicsContext currentContext]
+												 context:[theEvent context]
 											 eventNumber:[theEvent eventNumber]
 											  clickCount:[theEvent clickCount]
 												pressure:[theEvent pressure]];
@@ -285,14 +284,14 @@
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
 	NSUInteger flags = [theEvent modifierFlags] | 
-    ([[toolbox currentTool] shouldShowContextualMenu] ? NSEventModifierFlagControl : NSEventModifierFlagOption);
+		([[toolbox currentTool] shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
 	
-    NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSEventTypeLeftMouseDragged
+	NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSLeftMouseDragged
 												location:[theEvent locationInWindow] 
 										   modifierFlags:flags
 											   timestamp:[theEvent timestamp]
 											windowNumber:[theEvent windowNumber]
-												 context:[NSGraphicsContext currentContext]
+												 context:[theEvent context]
 											 eventNumber:[theEvent eventNumber]
 											  clickCount:[theEvent clickCount]
 												pressure:[theEvent pressure]];
@@ -302,14 +301,14 @@
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
 	NSUInteger flags = [theEvent modifierFlags] | 
-    ([[toolbox currentTool] shouldShowContextualMenu] ? NSEventModifierFlagControl : NSEventModifierFlagOption);
+		([[toolbox currentTool] shouldShowContextualMenu] ? NSControlKeyMask : NSAlternateKeyMask);
 	
-    NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSEventTypeLeftMouseUp
+	NSEvent *modifiedEvent = [NSEvent mouseEventWithType:NSLeftMouseUp
 												location:[theEvent locationInWindow] 
 										   modifierFlags:flags
 											   timestamp:[theEvent timestamp]
 											windowNumber:[theEvent windowNumber]
-												 context:[NSGraphicsContext currentContext]
+												 context:[theEvent context]
 											 eventNumber:[theEvent eventNumber]
 											  clickCount:[theEvent clickCount]
 												pressure:[theEvent pressure]];

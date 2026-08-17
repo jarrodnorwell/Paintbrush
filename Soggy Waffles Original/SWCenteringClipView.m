@@ -97,7 +97,7 @@
 		if (bgImage && needsRedraw) 
 		{
 			SWLockFocus(bgImage);
-            CGContextDrawTiledImage([[NSGraphicsContext currentContext] CGContext], 
+			CGContextDrawTiledImage([[NSGraphicsContext currentContext] graphicsPort], 
 									CGRectMake(0, 0, [bgImagePattern size].width, [bgImagePattern size].height), 
 									[[NSBitmapImageRep imageRepWithData:[bgImagePattern TIFFRepresentation]] CGImage]);
 			SWUnlockFocus(bgImage);
@@ -108,29 +108,29 @@
 	[self scrollToPoint:clipRect.origin];
 }
 
--(NSRect) constrainBoundsRect:(NSRect)proposedBounds {
-    NSRect constrainedBounds = [super constrainBoundsRect:proposedBounds];
+- (NSPoint)constrainScrollPoint:(NSPoint)proposedNewOrigin
+{
+	NSRect docRect = [[self documentView] frame];
+	NSRect clipRect = [self bounds];
+	NSPoint newScrollPoint = proposedNewOrigin;
+	CGFloat maxX = docRect.size.width - clipRect.size.width;
+	CGFloat maxY = docRect.size.height - clipRect.size.height;
+	
+	// If the clip view is wider than the doc, we can't scroll horizontally
+	if (docRect.size.width < clipRect.size.width) {
+		newScrollPoint.x = round(maxX / 2.0);
+	} else {
+		newScrollPoint.x = round(MAX(0,MIN(newScrollPoint.x,maxX)));
+	}
+	
+	// If the clip view is taller than the doc, we can't scroll vertically
+	if (docRect.size.height < clipRect.size.height) {
+		newScrollPoint.y = round( maxY / 2.0 );
+	} else {
+		newScrollPoint.y = round( MAX(0,MIN(newScrollPoint.y,maxY)) );
+	}
 
-    NSRect docRect = [[self documentView] frame];
-
-    CGFloat maxX = docRect.size.width - constrainedBounds.size.width;
-    CGFloat maxY = docRect.size.height - constrainedBounds.size.height;
-
-    // If the clip view is wider than the document, center horizontally
-    if (docRect.size.width < constrainedBounds.size.width) {
-        constrainedBounds.origin.x = round(maxX / 2.0);
-    } else {
-        constrainedBounds.origin.x = round(MAX(0, MIN(constrainedBounds.origin.x, maxX)));
-    }
-
-    // If the clip view is taller than the document, center vertically
-    if (docRect.size.height < constrainedBounds.size.height) {
-        constrainedBounds.origin.y = round(maxY / 2.0);
-    } else {
-        constrainedBounds.origin.y = round(MAX(0, MIN(constrainedBounds.origin.y, maxY)));
-    }
-
-    return constrainedBounds;
+	return newScrollPoint;
 }
 
 - (void)viewBoundsChanged:(NSNotification *)notification

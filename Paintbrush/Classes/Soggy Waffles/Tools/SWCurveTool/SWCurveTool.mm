@@ -21,6 +21,8 @@
 #import "SWCurveTool.h"
 #import "SWDocument.h"
 
+#import "Paintbrush-Swift.h"
+
 @implementation SWCurveTool
 
 - (id)initWithController:(SWToolboxController *)controller
@@ -86,6 +88,7 @@
         primaryColor = (flags & NSEventModifierFlagOption) ? backColor : frontColor;
 	}
 	
+    // [[SWJNImageTools shared] clearWithImage:bufferImage in:NSZeroRect];
 	[SWImageTools clearImage:bufferImage];
 	drawToMe = bufferImage;
 	
@@ -115,6 +118,7 @@
 			break;
 	}
 	
+    // [[SWJNImageTools shared] lockWithImage:drawToMe];
 	SWLockFocus(drawToMe);
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	
@@ -122,6 +126,7 @@
 	NSBezierPath *p = [self pathFromPoint:savedPoint toPoint:point];
 	[p stroke];
 	
+    // [[SWJNImageTools shared] unlock];
 	SWUnlockFocus(drawToMe);
 	
 	// Use the points clicked to build a redraw rectangle
@@ -151,6 +156,7 @@
 	{
 		numberOfClicks = 0;
 		[document handleUndoWithImageData:nil frame:NSZeroRect];
+        // [[SWJNImageTools shared] drawTo:_mainImage from:_bufferImage at:NSZeroPoint with:YES];
 		[SWImageTools drawToImage:_mainImage fromImage:_bufferImage withComposition:YES];
 	}
 	

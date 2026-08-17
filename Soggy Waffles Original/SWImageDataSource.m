@@ -58,7 +58,7 @@
 - (id)initWithURL:(NSURL *)url
 {
 	// Temporary image to get dimensions
-    NSBitmapImageRep *tempImage = [[NSBitmapImageRep alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+	NSBitmapImageRep *tempImage = [NSBitmapImageRep imageRepWithContentsOfURL:url];
 	
 	if (!tempImage)	// failure case
 		return nil;
@@ -79,15 +79,7 @@
 
 - (id)initWithPasteboard
 {
-    NSPasteboard *pb = [NSPasteboard generalPasteboard];
-
-    NSData *data = [pb dataForType:NSPasteboardTypeTIFF];
-
-    NSBitmapImageRep *tempImage = nil;
-
-    if (data) {
-        tempImage = [[NSBitmapImageRep alloc] initWithData:data];
-    }
+	NSBitmapImageRep *tempImage = [NSBitmapImageRep imageRepWithPasteboard:[NSPasteboard generalPasteboard]];
 	
 	NSAssert(tempImage, @"We can't initialize with a pasteboard without an image on it!");
 	if (!tempImage)	// failure case
@@ -217,15 +209,6 @@
 	NSRect pastedImageRect = NSMakeRect(0, 0, [imageRep pixelsWide], [imageRep pixelsHigh]);
 	NSRect finalRect = NSUnionRect(bufferImageRect, pastedImageRect);
 	
-    
-    DebugLog(@"buffer: %ld x %ld",
-             (long)bufferImage.pixelsWide,
-             (long)bufferImage.pixelsHigh);
-
-    DebugLog(@"imageRep: %ld x %ld",
-             (long)imageRep.pixelsWide,
-             (long)imageRep.pixelsHigh);
-    
 	if (!NSEqualRects(bufferImageRect, finalRect))
 	{
 		// Pasting something bigger than the previous image, so create a new one with the new size

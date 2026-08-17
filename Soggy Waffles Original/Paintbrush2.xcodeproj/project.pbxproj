@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 110;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2706B85510ED712200080D4A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2706B83E10ED709200080D4A /* SenTestingKit.framework */; };
 		2706B88010ED719500080D4A /* PaintViewDrawingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B81010ED6FE400080D4A /* PaintViewDrawingTest.m */; };
 		2706B94D10ED77A600080D4A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B94C10ED77A600080D4A /* DebugLog.m */; };
 		2706B94E10ED77A600080D4A /* DebugLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2706B94C10ED77A600080D4A /* DebugLog.m */; };
@@ -41,6 +42,7 @@
 		275110320F169A0800A67F22 /* COPYING.txt in Resources */ = {isa = PBXBuildFile; fileRef = 275110310F169A0800A67F22 /* COPYING.txt */; };
 		275C82DE0BAF98DC00F836FA /* SWPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275C82DC0BAF98DC00F836FA /* SWPreferenceController.m */; };
 		2774CC770C0A1D5100FE7F0F /* SWCurveTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774CC750C0A1D5100FE7F0F /* SWCurveTool.m */; };
+		277FCC0F123C6E8300249A3F /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27A1CFC61226E8E000822B7D /* Sparkle.framework */; };
 		277FCC84123DB70800249A3F /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 277FCC83123DB70800249A3F /* PFMoveApplication.m */; };
 		277FCC95123DB74A00249A3F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 277FCC94123DB74A00249A3F /* Security.framework */; };
 		278BF71A0D4E47D40046BCA2 /* SWEyeDropperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 278BF7190D4E47D40046BCA2 /* SWEyeDropperTool.m */; };
@@ -56,6 +58,7 @@
 		27955D070CFDE7B900D5AF99 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27955D060CFDE7B900D5AF99 /* arrow.png */; };
 		27A1CD2E10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A1CD2D10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m */; };
 		27A1CD6810A650D4005D2D84 /* SavePanelAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27A1CD6710A650D4005D2D84 /* SavePanelAccessoryView.xib */; };
+		27A1CFC71226E8E000822B7D /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A1CFC61226E8E000822B7D /* Sparkle.framework */; };
 		27A2E05B16AB70B400F124D1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		27A2E05C16AB70B400F124D1 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27955D060CFDE7B900D5AF99 /* arrow.png */; };
 		27A2E05D16AB70B400F124D1 /* bucket-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EA85430D3FDF6200A376A2 /* bucket-cursor.png */; };
@@ -223,19 +226,18 @@
 		594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 594D309E0DFF939E0095E075 /* Cocoa.framework */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		E6D71B913021F1FE0011B2D8 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E6D71B903021F1FE0011B2D8 /* Sparkle */; };
-		E6D71B933021F2090011B2D8 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E6D71B923021F2090011B2D8 /* Sparkle */; };
-		E6D725B63021FC2F0011B2D8 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D725B53021FC2F0011B2D8 /* UniformTypeIdentifiers.framework */; };
-		E6D725B73021FC350011B2D8 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6D725B53021FC2F0011B2D8 /* UniformTypeIdentifiers.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		274A6B140BAB4ABD00033B75 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
 			dstPath = "";
-			dstSubfolder = Frameworks;
+			dstSubfolderSpec = 10;
 			files = (
+				277FCC0F123C6E8300249A3F /* Sparkle.framework in CopyFiles */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -247,6 +249,7 @@
 		2706B81010ED6FE400080D4A /* PaintViewDrawingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintViewDrawingTest.m; sourceTree = "<group>"; };
 		2706B83910ED702F00080D4A /* Test.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2706B83A10ED702F00080D4A /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
+		2706B83E10ED709200080D4A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		2706B94B10ED77A600080D4A /* DebugLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugLog.h; sourceTree = "<group>"; };
 		2706B94C10ED77A600080D4A /* DebugLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugLog.m; sourceTree = "<group>"; };
 		270F02710BD0218F005B92A3 /* SWTextToolWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTextToolWindowController.h; sourceTree = "<group>"; };
@@ -310,6 +313,7 @@
 		27A1CD2C10A64F02005D2D84 /* SWSavePanelAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWSavePanelAccessoryViewController.h; sourceTree = "<group>"; };
 		27A1CD2D10A64F02005D2D84 /* SWSavePanelAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWSavePanelAccessoryViewController.m; sourceTree = "<group>"; };
 		27A1CD6510A650BB005D2D84 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SavePanelAccessoryView.xib; sourceTree = "<group>"; };
+		27A1CFC61226E8E000822B7D /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		27A2E0CD16AB70B400F124D1 /* Paintbrush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paintbrush.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27A2E0CF16AB70B400F124D1 /* Info-AppStore.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-AppStore.plist"; sourceTree = "<group>"; };
 		27A2E10E16AB734700F124D1 /* SUUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUUpdater.h; sourceTree = "<group>"; };
@@ -404,34 +408,37 @@
 		594D309E0DFF939E0095E075 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Paintbrush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Paintbrush.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6D725B53021FC2F0011B2D8 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		2706B83610ED702F00080D4A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
+				2706B85510ED712200080D4A /* SenTestingKit.framework in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		27A2E0C316AB70B400F124D1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				27A2E0C416AB70B400F124D1 /* Cocoa.framework in Frameworks */,
-				E6D71B933021F2090011B2D8 /* Sparkle in Frameworks */,
 				27A2E0C516AB70B400F124D1 /* QuartzCore.framework in Frameworks */,
 				27A2E0C716AB70B400F124D1 /* Security.framework in Frameworks */,
-				E6D725B73021FC350011B2D8 /* UniformTypeIdentifiers.framework in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8D15AC330486D014006FF6A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				594D309F0DFF939E0095E075 /* Cocoa.framework in Frameworks */,
-				E6D71B913021F1FE0011B2D8 /* Sparkle in Frameworks */,
 				273E0B6E0E32FC2200D11815 /* QuartzCore.framework in Frameworks */,
+				27A1CFC71226E8E000822B7D /* Sparkle.framework in Frameworks */,
 				277FCC95123DB74A00249A3F /* Security.framework in Frameworks */,
-				E6D725B63021FC2F0011B2D8 /* UniformTypeIdentifiers.framework in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -760,7 +767,6 @@
 		2A37F4C3FDCFA73011CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E6D725B53021FC2F0011B2D8 /* UniformTypeIdentifiers.framework */,
 				594D30730DFF93770095E075 /* Linked Frameworks */,
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
@@ -770,7 +776,9 @@
 		594D30730DFF93770095E075 /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				27A1CFC61226E8E000822B7D /* Sparkle.framework */,
 				594D309E0DFF939E0095E075 /* Cocoa.framework */,
+				2706B83E10ED709200080D4A /* SenTestingKit.framework */,
 				277FCC94123DB74A00249A3F /* Security.framework */,
 			);
 			name = "Linked Frameworks";
@@ -790,6 +798,8 @@
 			);
 			buildRules = (
 			);
+			dependencies = (
+			);
 			name = Test;
 			productName = Test;
 			productReference = 2706B83910ED702F00080D4A /* Test.octest */;
@@ -804,6 +814,8 @@
 				27A2E0C316AB70B400F124D1 /* Frameworks */,
 			);
 			buildRules = (
+			);
+			dependencies = (
 			);
 			name = "Paintbrush-AppStore";
 			productInstallPath = "$(HOME)/Applications";
@@ -822,6 +834,8 @@
 			);
 			buildRules = (
 			);
+			dependencies = (
+			);
 			name = Paintbrush;
 			productInstallPath = "$(HOME)/Applications";
 			productName = Paintbrush;
@@ -833,11 +847,8 @@
 /* Begin PBXProject section */
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			attributes = {
-				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2700;
-			};
 			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Paintbrush2" */;
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -847,10 +858,6 @@
 				German,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Paintbrush */;
-			packageReferences = (
-				E6D71B8F3021F1FE0011B2D8 /* XCRemoteSwiftPackageReference "Sparkle" */,
-			);
-			preferredProjectObjectVersion = 110;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -864,11 +871,14 @@
 /* Begin PBXResourcesBuildPhase section */
 		2706B83410ED702F00080D4A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		27A2E05A16AB70B400F124D1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				27A2E05B16AB70B400F124D1 /* InfoPlist.strings in Resources */,
 				27A2E05C16AB70B400F124D1 /* arrow.png in Resources */,
@@ -933,9 +943,11 @@
 				27A2E09716AB70B400F124D1 /* Localizable.strings in Resources */,
 				27A2E09816AB70B400F124D1 /* PrintPanelAccessoryView.xib in Resources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8D15AC2B0486D014006FF6A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				27955D070CFDE7B900D5AF99 /* arrow.png in Resources */,
@@ -1000,32 +1012,40 @@
 				27FB972C1093718300147DDF /* Localizable.strings in Resources */,
 				27CD321E11F635B900AB5996 /* PrintPanelAccessoryView.xib in Resources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		2706B83710ED702F00080D4A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			shellPath = /bin/sh;
-			shellScript = (
-				"# Run the unit tests in this test bundle.",
-				"\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"",
-				"",
+			buildActionMask = 2147483647;
+			files = (
 			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2706B83510ED702F00080D4A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				2706B88010ED719500080D4A /* PaintViewDrawingTest.m in Sources */,
 				2706B94D10ED77A600080D4A /* DebugLog.m in Sources */,
 				2723FB601162830F005BCB1B /* SWImageDataSource.m in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		27A2E09916AB70B400F124D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				27A2E09A16AB70B400F124D1 /* main.m in Sources */,
 				27A2E09B16AB70B400F124D1 /* SWAppController.m in Sources */,
@@ -1070,9 +1090,11 @@
 				27A2E0C216AB70B400F124D1 /* PFMoveApplication.m in Sources */,
 				27A2E11016AB734700F124D1 /* SUUpdater.m in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				27AFFDF20D68C06900368E2B /* SWAppController.m in Sources */,
@@ -1116,6 +1138,7 @@
 				27CD323011F6361700AB5996 /* SWPrintPanelAccessoryViewController.m in Sources */,
 				277FCC84123DB70800249A3F /* PFMoveApplication.m in Sources */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -1211,18 +1234,15 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		2706B83B10ED703000080D4A /* Debug configuration for PBXNativeTarget "Test" */ = {
+		2706B83B10ED703000080D4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_ENABLE_OBJC_WEAK = YES;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
-				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
-				EXCLUDED_ARCHS = x86_64;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1230,87 +1250,67 @@
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
 				INFOPLIST_FILE = "Test-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Cocoa,
 					"-framework",
 					SenTestingKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
+				PREBINDING = NO;
 				PRODUCT_NAME = Test;
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
-		2706B83C10ED703000080D4A /* Release configuration for PBXNativeTarget "Test" */ = {
+		2706B83C10ED703000080D4A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				COPY_PHASE_STRIP = YES;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_HARDENED_RUNTIME = NO;
-				EXCLUDED_ARCHS = x86_64;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
 				INFOPLIST_FILE = "Test-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Cocoa,
 					"-framework",
 					SenTestingKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.yourcompany.${PRODUCT_NAME:rfc1034identifier}";
+				PREBINDING = NO;
 				PRODUCT_NAME = Test;
-				SDKROOT = macosx;
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
-		27A2E0CB16AB70B400F124D1 /* Debug configuration for PBXNativeTarget "Paintbrush-AppStore" */ = {
+		27A2E0CB16AB70B400F124D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
-				EXCLUDED_ARCHS = x86_64;
+				CURRENT_PROJECT_VERSION = 2.2.0;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_MODEL_TUNING = G4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = Paintbrush_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				INFOPLIST_FILE = "Info-AppStore.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 3.0;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-DDEBUG",
 					"-DAPPSTORE",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.soggywaffles.Paintbrush;
 				PRODUCT_NAME = Paintbrush;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.6;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = app;
@@ -1318,17 +1318,11 @@
 			};
 			name = Debug;
 		};
-		27A2E0CC16AB70B400F124D1 /* Release configuration for PBXNativeTarget "Paintbrush-AppStore" */ = {
+		27A2E0CC16AB70B400F124D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
-				EXCLUDED_ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CURRENT_PROJECT_VERSION = 2.1.2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
@@ -1341,41 +1335,30 @@
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G4;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = Paintbrush_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				INFOPLIST_FILE = "Info-AppStore.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 3.0;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DAPPSTORE";
-				PRODUCT_BUNDLE_IDENTIFIER = com.soggywaffles.Paintbrush;
 				PRODUCT_NAME = Paintbrush;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.6;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
-		C05733C808A9546B00998B17 /* Debug configuration for PBXNativeTarget "Paintbrush" */ = {
+		C05733C808A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++23";
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
-				EXCLUDED_ARCHS = x86_64;
+				CURRENT_PROJECT_VERSION = 2.1.2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
@@ -1383,26 +1366,22 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"\"$(SRCROOT)\"",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu23;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_MODEL_TUNING = G4;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = Paintbrush_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 3.0;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.soggywaffles.Paintbrush;
 				PRODUCT_NAME = Paintbrush;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.5;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = app;
@@ -1410,18 +1389,15 @@
 			};
 			name = Debug;
 		};
-		C05733C908A9546B00998B17 /* Release configuration for PBXNativeTarget "Paintbrush" */ = {
+		C05733C908A9546B00998B17 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++23";
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
-				EXCLUDED_ARCHS = x86_64;
+				ARCHS = (
+					x86_64,
+					i386,
+					ppc,
+				);
+				CURRENT_PROJECT_VERSION = 2.1.2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
@@ -1429,130 +1405,62 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_3)",
 					"\"$(SRCROOT)\"",
 					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_AUTO_VECTORIZATION = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu23;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G4;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = Paintbrush_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 3.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.soggywaffles.Paintbrush;
 				PRODUCT_NAME = Paintbrush;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.5;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
-		C05733CC08A9546B00998B17 /* Debug configuration for PBXProject "Paintbrush2" */ = {
+		C05733CC08A9546B00998B17 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ARCHS = "$(NATIVE_ARCH)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 2.0.0;
-				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				EXCLUDED_ARCHS = x86_64;
 				GCC_ALTIVEC_EXTENSIONS = YES;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 1;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				VERSION_INFO_SUFFIX = "";
 			};
 			name = Debug;
 		};
-		C05733CD08A9546B00998B17 /* Release configuration for PBXProject "Paintbrush2" */ = {
+		C05733CD08A9546B00998B17 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CURRENT_PROJECT_VERSION = 2.0.0;
-				DEAD_CODE_STRIPPING = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				EXCLUDED_ARCHS = x86_64;
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				VERSION_INFO_SUFFIX = "";
@@ -1565,60 +1473,40 @@
 		2706B83D10ED703000080D4A /* Build configuration list for PBXNativeTarget "Test" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2706B83B10ED703000080D4A /* Debug configuration for PBXNativeTarget "Test" */,
-				2706B83C10ED703000080D4A /* Release configuration for PBXNativeTarget "Test" */,
+				2706B83B10ED703000080D4A /* Debug */,
+				2706B83C10ED703000080D4A /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		27A2E0CA16AB70B400F124D1 /* Build configuration list for PBXNativeTarget "Paintbrush-AppStore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				27A2E0CB16AB70B400F124D1 /* Debug configuration for PBXNativeTarget "Paintbrush-AppStore" */,
-				27A2E0CC16AB70B400F124D1 /* Release configuration for PBXNativeTarget "Paintbrush-AppStore" */,
+				27A2E0CB16AB70B400F124D1 /* Debug */,
+				27A2E0CC16AB70B400F124D1 /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Paintbrush" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C05733C808A9546B00998B17 /* Debug configuration for PBXNativeTarget "Paintbrush" */,
-				C05733C908A9546B00998B17 /* Release configuration for PBXNativeTarget "Paintbrush" */,
+				C05733C808A9546B00998B17 /* Debug */,
+				C05733C908A9546B00998B17 /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Paintbrush2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C05733CC08A9546B00998B17 /* Debug configuration for PBXProject "Paintbrush2" */,
-				C05733CD08A9546B00998B17 /* Release configuration for PBXProject "Paintbrush2" */,
+				C05733CC08A9546B00998B17 /* Debug */,
+				C05733CD08A9546B00998B17 /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		E6D71B8F3021F1FE0011B2D8 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.9.5;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		E6D71B903021F1FE0011B2D8 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E6D71B8F3021F1FE0011B2D8 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
-		};
-		E6D71B923021F2090011B2D8 /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E6D71B8F3021F1FE0011B2D8 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 }

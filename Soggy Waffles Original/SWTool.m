@@ -177,7 +177,7 @@
 {
 	NSRect tempRect;
 	tempRect.origin = NSMakePoint(round(fmin(p1.x, p2.x) - (lineWidth/2) - 1), round(fmin(p1.y, p2.y) - (lineWidth/2) - 1));
-    tempRect.size = NSMakeSize((fabs(p1.x - p2.x) + lineWidth + 2), (fabs(p1.y - p2.y) + lineWidth + 2));
+	tempRect.size = NSMakeSize((abs(p1.x - p2.x) + lineWidth + 2), (abs(p1.y - p2.y) + lineWidth + 2));
 	return [self addRectToRedrawRect:tempRect];
 }
 

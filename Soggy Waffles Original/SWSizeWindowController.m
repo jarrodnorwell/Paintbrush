@@ -21,9 +21,9 @@
 #import "SWDocument.h"
 
 
-static NSString *sizeMenuLabels[] = { @"640_480", @"800_600", @"1024_768", @"1280_1024", @"1920_1080" };
-static NSUInteger sizeMenuWidths[] = { 640, 800, 1024, 1280, 1920 };
-static NSUInteger sizeMenuHeights[] = { 480, 600, 768, 1024, 1080 };
+static NSString *sizeMenuLabels[] = { @"640_480", @"800_600", @"1024_768", @"1280_1024" };
+static NSUInteger sizeMenuWidths[] = { 640, 800, 1024, 1280 };
+static NSUInteger sizeMenuHeights[] = { 480, 600, 768, 1024 };
 static NSUInteger numItems = sizeof(sizeMenuLabels) / sizeof(sizeMenuLabels[0]); // How many size menu items are there?
 static NSUInteger sizeOffset = 3; // How many non-size menu items are there?
 
@@ -51,12 +51,6 @@ static NSUInteger sizeOffset = 3; // How many non-size menu items are there?
 	NSNumber *height = [defaults objectForKey:@"VerticalSize"];
 	[widthField setIntValue:[width integerValue]];
 	[heightField setIntValue:[height integerValue]];
-    
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterNoStyle];
-    
-    [widthField setFormatter:formatter];
-    [heightField setFormatter:formatter];
 	
 	// Populate the sizeButton
 	[sizeButton removeAllItems];
@@ -109,10 +103,12 @@ static NSUInteger sizeOffset = 3; // How many non-size menu items are there?
 }
 
 
--(BOOL) validateMenuItem:(NSMenuItem *)menuItem {
-    if (menuItem == clipboard)
-        return [SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil;
-    return YES;
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	if (menuItem == clipboard) {
+		return ([SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]] != nil);
+	}
+	return YES;
 }
 
 
@@ -142,7 +138,7 @@ static NSUInteger sizeOffset = 3; // How many non-size menu items are there?
 // After they click OK or Cancel
 - (IBAction)endSheet:(id)sender
 {
-	if ([sender tag] == NSModalResponseOK) {
+	if ([sender tag] == NSOKButton) {
 		if ([widthField integerValue] > 0 && [heightField integerValue] > 0) {
 			
 			// Save entered values as defaults
@@ -153,14 +149,14 @@ static NSUInteger sizeOffset = 3; // How many non-size menu items are there?
 			[defaults setObject:height forKey:@"VerticalSize"];
 			
 			[[self window] orderOut:sender];
-			[NSApp endSheet:[self window] returnCode:NSModalResponseOK];
+			[NSApp endSheet:[self window] returnCode:NSOKButton];
 		} else {
 			NSBeep();
 		}
 	} else {
 		// They clicked cancel
 		[[self window] orderOut:sender];
-		[NSApp endSheet:[self window] returnCode:NSModalResponseCancel];
+		[NSApp endSheet:[self window] returnCode:NSCancelButton];
 	}	
 }
 

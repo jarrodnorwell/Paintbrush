@@ -75,6 +75,9 @@
 - (void)undoLevelChanged:(NSNotification *)n;
 
 // Sheets for size!
+- (void)sizeSheetDidEnd:(NSWindow *)sheet
+			 returnCode:(NSInteger)returnCode
+			contextInfo:(void *)contextInfo;
 - (IBAction)raiseSizeSheet:(id)sender;
 - (IBAction)raiseResizeSheet:(id)sender;
 - (void)setUpPaintView;

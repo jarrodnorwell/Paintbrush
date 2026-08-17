@@ -19,10 +19,6 @@
 
 #import "SWButtonCell.h"
 
-@implementation SWButton
-@end
-
-/*
 
 @implementation SWButtonCell
 
@@ -66,7 +62,7 @@
 		[altImage lockFocus];
 		[highlight drawAtPoint:NSZeroPoint
 					  fromRect:NSZeroRect
-                     operation:NSCompositingOperationSourceOver
+					 operation:NSCompositeSourceOver
 					  fraction:1.0];
 		NSShadow *shadow = [[NSShadow alloc] init];
 		[shadow setShadowBlurRadius:4.0];
@@ -74,7 +70,7 @@
 		[shadow set];
 		[normal drawAtPoint:NSZeroPoint
 				   fromRect:NSZeroRect
-                  operation:NSCompositingOperationSourceOver
+				  operation:NSCompositeSourceOver
 				   fraction:1.0];
 		[shadow release];
 		[altImage unlockFocus];
@@ -102,12 +98,12 @@
 		[hovImage lockFocus];
 		[highlight drawAtPoint:NSZeroPoint
 					  fromRect:NSZeroRect
-                     operation:NSCompositingOperationSourceOver
+					 operation:NSCompositeSourceOver
 					  fraction:1.0];
 		
 		[normal drawAtPoint:NSZeroPoint
 				   fromRect:NSZeroRect
-                  operation:NSCompositingOperationSourceOver
+				  operation:NSCompositeSourceOver
 				   fraction:1.0];
 		[hovImage unlockFocus];
 	}
@@ -140,4 +136,3 @@
 
 
 @end
-*/

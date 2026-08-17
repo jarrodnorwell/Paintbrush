@@ -32,8 +32,6 @@
 #import "SWPrintPanelAccessoryViewController.h"
 #import "SWImageDataSource.h"
 
-#include <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
-
 @implementation SWDocument
 
 // Synthesize our properties here
@@ -126,7 +124,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		// When we create a new document
 		if (kSWDocumentWillShowSheet) 
 		{
-            [[aController window] center];
 			[[aController window] orderFront:self];
 			[self raiseSizeSheet:aController];
 		}
@@ -165,7 +162,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	
 	if ([fileManager fileExistsAtPath: folder] == NO)
 	{
-        [fileManager createDirectoryAtPath:folder withIntermediateDirectories:NO attributes:@{} error:nil];
+		[fileManager createDirectoryAtPath: folder attributes: nil];
 	}
     
 	NSString *fileName = @"bgImage.png";
@@ -182,27 +179,40 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Called when a new document is made
 - (IBAction)raiseSizeSheet:(id)sender
 {
-    [[super windowForSheet] beginSheet:[sizeController window] completionHandler:^(NSModalResponse returnCode) {
-        switch (returnCode) {
-            case NSModalResponseOK: {
-                NSSize openingSize;
-                openingSize.width = [sizeController width];
-                openingSize.height = [sizeController height];
-                
-                // You better be nil at this point!
-                NSAssert(dataSource == nil, @"We can't already have a DataSource when creating a document!");
+    [NSApp beginSheet:[sizeController window]
+	   modalForWindow:[super windowForSheet]
+		modalDelegate:self
+	   didEndSelector:@selector(sizeSheetDidEnd:returnCode:contextInfo:)
+		  contextInfo:NULL];
+}
 
-                // Create the data source
-                dataSource = [[SWImageDataSource alloc] initWithSize:openingSize];
 
-                // Initial creation
-                [self setUpPaintView];
-            } break;
-            case NSModalResponseCancel:
-                [[super windowForSheet] close];
-                break;
-        }
-    }];
+// After the sheet ends, this takes over. If the user clicked "OK", a new
+// PaintView is initialized. Otherwise, the window closes.
+- (void)sizeSheetDidEnd:(NSWindow *)sheet
+			 returnCode:(NSInteger)returnCode
+			contextInfo:(void *)contextInfo
+{
+	if (returnCode == NSOKButton) 
+	{
+		NSSize openingSize;
+		openingSize.width = [sizeController width];
+		openingSize.height = [sizeController height];
+		
+		// You better be nil at this point!
+		NSAssert(dataSource == nil, @"We can't already have a DataSource when creating a document!");
+
+		// Create the data source
+		dataSource = [[SWImageDataSource alloc] initWithSize:openingSize];
+
+		// Initial creation
+		[self setUpPaintView];
+	} 
+	else if (returnCode == NSCancelButton)
+	{
+		// Close the document - they obviously don't want to play
+		[[super windowForSheet] close];
+	}
 }
 
 
@@ -217,32 +227,41 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	NSSize currSize = [dataSource size];
 	[resizeController setCurrentSize:currSize];
 	
-    [[super windowForSheet] beginSheet:[resizeController window] completionHandler:^(NSModalResponse returnCode) {
-        switch (returnCode) {
-            case NSModalResponseOK: {
-                NSSize newSize;
-                newSize.width = [resizeController width];
-                newSize.height = [resizeController height];
-                
-                // Nothing to do if the size isn't changing!
-                if ([dataSource size].width != newSize.width || [dataSource size].height != newSize.height)
-                {
-                    // This is also important!
-                    [toolbox tieUpLooseEndsForCurrentTool];
+    [NSApp beginSheet:[resizeController window]
+	   modalForWindow:[super windowForSheet]
+		modalDelegate:self
+	   didEndSelector:@selector(resizeSheetDidEnd:returnCode:contextInfo:)
+		  contextInfo:NULL];
+}
 
-                    [self handleUndoWithImageData:nil frame:NSZeroRect];
-                    
-                    [dataSource resizeToSize:newSize scaleImage:[resizeController scales]];
-                    [paintView setFrame:NSMakeRect(0.0, 0.0, newSize.width, newSize.height)]; // Forces a redraw
-                    
-                    // We should also redraw the clip view
-                    [clipView setNeedsDisplay:YES];
-                }
-            } break;
-            case NSModalResponseCancel:
-                break;
-        }
-    }];
+
+// After the sheet ends, this takes over. If the user clicked "OK", a new
+// PaintView is initialized. Otherwise, the window closes.
+- (void)resizeSheetDidEnd:(NSWindow *)sheet
+			   returnCode:(NSInteger)returnCode
+			  contextInfo:(void *)contextInfo
+{
+	if (returnCode == NSOKButton) 
+	{
+		NSSize newSize;
+		newSize.width = [resizeController width];
+		newSize.height = [resizeController height];
+		
+		// Nothing to do if the size isn't changing!
+		if ([dataSource size].width != newSize.width || [dataSource size].height != newSize.height) 
+		{
+			// This is also important!
+			[toolbox tieUpLooseEndsForCurrentTool];
+
+			[self handleUndoWithImageData:nil frame:NSZeroRect];
+			
+			[dataSource resizeToSize:newSize scaleImage:[resizeController scales]];
+			[paintView setFrame:NSMakeRect(0.0, 0.0, newSize.width, newSize.height)]; // Forces a redraw
+			
+			// We should also redraw the clip view
+			[clipView setNeedsDisplay:YES];
+		}
+	}
 }
 
 
@@ -260,9 +279,12 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		if (!textController)
 			textController = [[SWTextToolWindowController alloc] initWithDocument:self];
 		
-        [[super windowForSheet] beginSheet:[textController window] completionHandler:^(NSModalResponse returnCode) {
-            [[[NSFontManager sharedFontManager] fontPanel:NO] orderOut:self];
-        }];
+		// Orders the font manager to the front
+		[NSApp beginSheet:[textController window]
+		   modalForWindow:[super windowForSheet]
+			modalDelegate:self
+		   didEndSelector:@selector(textSheetDidEnd:string:)
+			  contextInfo:NULL];
 		
 		[[NSFontManager sharedFontManager] orderFrontFontPanel:self];
 		
@@ -272,6 +294,15 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		
 	}
 }
+
+
+- (void)textSheetDidEnd:(NSWindow *)sheet
+				 string:(NSString *)string
+{
+	// Orders the font manager to exit
+	[[[NSFontManager sharedFontManager] fontPanel:NO] orderOut:self];
+}
+
 
 #pragma mark Menu actions (Open, Save, Cut, Print, et cetera)
 
@@ -287,23 +318,30 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[super saveDocument:sender];
 }
 
--(void) saveToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation completionHandler:(void (^)(NSError *))completionHandler {
-    [super saveToURL:url ofType:typeName forSaveOperation:saveOperation completionHandler:^(NSError *error) {
-        if (error == nil && (saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation)) {
-            NSURL *fileURL = [self fileURL];
-            
-            NSError *readError = nil;
-            if (![self readFromURL:fileURL ofType:typeName error:&readError]) {
-                error = readError;
-            } else {
-                [paintView setNeedsDisplay:YES];
-            }
-        }
-        
-        if (completionHandler) {
-            completionHandler(error);
-        }
-    }];
+
+// Overridden so that we can reload the image after saving
+- (BOOL) saveToURL:(NSURL *)absURL 
+			ofType:(NSString *)type 
+  forSaveOperation:(NSSaveOperationType)saveOp 
+			 error:(NSError **)outError
+{
+    BOOL status = [super saveToURL:absURL ofType:type forSaveOperation:saveOp error:outError];
+	
+    if (status==YES && (saveOp==NSSaveOperation || saveOp==NSSaveAsOperation))
+    {
+		NSURL* url = [self fileURL];
+		
+		// reload the image (this could fail)
+		status = [self readFromURL:url ofType:type error:outError];
+		
+		// re-initialize the UI
+		[paintView setNeedsDisplay:YES];
+		
+//		// Tell the info panel that the url changed
+//		[ImageInfoPanel setURL:url];
+    }
+	
+	return status;
 }
 
 
@@ -316,23 +354,23 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	[SWImageTools flipImageVertical:bitmap];
 		
 	NSData *data = nil;
-    NSBitmapImageFileType fileType = NSBitmapImageFileTypePNG;
+	NSBitmapImageFileType fileType = NSPNGFileType;
 	
 	if ([aType isEqualToString:@"bmp"])
-        fileType = NSBitmapImageFileTypeBMP;
+		fileType = NSBMPFileType;
 	else if ([aType isEqualToString:@"png"])
-        fileType = NSBitmapImageFileTypePNG;
+		fileType = NSPNGFileType;
 	else if ([aType isEqualToString:@"jpg"])
-        fileType = NSBitmapImageFileTypeJPEG;
+		fileType = NSJPEGFileType;
 	else if ([aType isEqualToString:@"gif"])
-        fileType = NSBitmapImageFileTypeGIF;
+		fileType = NSGIFFileType;
 	else if ([aType isEqualToString:@"tif"])
-        fileType = NSBitmapImageFileTypeTIFF;
+		fileType = NSTIFFFileType;
 	else
 		DebugLog(@"Error: unknown filetype!");
 	
 	// We need to retrieve the data stored in the save panel, and pack them into a dictionary
-    NSTIFFCompression tiffCompression = (fileType == NSBitmapImageFileTypeJPEG ? NSTIFFCompressionJPEG : NSTIFFCompressionNone);
+	NSTIFFCompression tiffCompression = (fileType == NSJPEGFileType ? NSTIFFCompressionJPEG : NSTIFFCompressionNone);
 	CGFloat compressionFactor = [savePanelAccessoryViewController imageQuality];
 	//BOOL alpha = [savePanelAccessoryViewController isAlphaEnabled];
 	NSDictionary *propDict = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -399,8 +437,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 	}
 	
 	// Make sure the correct file extension is being used
-    [savePanel setAllowedContentTypes:[NSArray arrayWithObject:[UTType typeWithFilenameExtension:currentFileType]]];
-	// [savePanel setAllowedFileTypes:[NSArray arrayWithObject:currentFileType]];
+	[savePanel setAllowedFileTypes:[NSArray arrayWithObject:currentFileType]];
 	
 	return YES;
 }
@@ -425,7 +462,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		[currentFileType release];
 		currentFileType = [newFileType retain];
 		NSSavePanel *savePanel = (NSSavePanel *)[[savePanelAccessoryViewController view] window];
-        [savePanel setAllowedContentTypes:[NSArray arrayWithObject:[UTType typeWithFilenameExtension:currentFileType]]];
+		[savePanel setAllowedFileTypes:[NSArray arrayWithObject:currentFileType]];
 	}
 }
 
@@ -525,8 +562,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		// Make sure we flip the image before we put it in the pasteboard
 		[SWImageTools flipImageVertical:selectedImage];
 		
-        [pb declareTypes:[NSArray arrayWithObject:NSPasteboardTypeTIFF] owner:self];
-        [pb setData:[selectedImage TIFFRepresentation] forType:NSPasteboardTypeTIFF];
+		[pb declareTypes:[NSArray arrayWithObject:NSTIFFPboardType] owner:self];
+		[pb setData:[selectedImage TIFFRepresentation] forType:NSTIFFPboardType];
 		
 		// Now flip it again
 		[SWImageTools flipImageVertical:selectedImage];
@@ -552,53 +589,37 @@ static BOOL kSWDocumentWillShowSheet = YES;
 // Paste
 - (IBAction)paste:(id)sender
 {
-    [self handleUndoWithImageData:nil frame:NSZeroRect];
-    [toolboxController switchToScissors:nil];
-    
-    NSData *data = nil;
-    
-    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-    for (NSPasteboardItem *item in pasteboard.pasteboardItems) {
-        if ([pasteboard availableTypeFromArray:@[NSPasteboardTypeFileURL]]) {
-            NSArray<NSURL *> *urls = [pasteboard readObjectsForClasses:@[[NSURL class]] options:@{
-                NSPasteboardURLReadingFileURLsOnlyKey : @YES
-            }];
-            
-            data = [NSData dataWithContentsOfURL:urls.firstObject];
-            break;
-        }
-        
-        if ([pasteboard availableTypeFromArray:@[NSPasteboardTypeTIFF]]) {
-            data = [item dataForType:NSPasteboardTypeTIFF];
-            break;
-        }
-    }
-    
-    if (data) {
-        [paintView cursorUpdate:[NSApp currentEvent]]; // TODO: (jarrodnorwell) check this
-        NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
+	// Prepare for a paste by allowing an undo
+	[self handleUndoWithImageData:nil frame:NSZeroRect];
+	[toolboxController switchToScissors:nil];
+	
+	NSData *data = [SWImageTools readImageFromPasteboard:[NSPasteboard generalPasteboard]];
+	if (data)
+	{
+		[paintView cursorUpdate:nil];
+		NSBitmapImageRep *temp = [[NSBitmapImageRep alloc] initWithData:data];
 
-        NSPoint origin = [[paintView superview] bounds].origin;
-        if (origin.x < 0) origin.x = 0;
-        if (origin.y < 0) origin.y = 0;
+		NSPoint origin = [[paintView superview] bounds].origin;
+		if (origin.x < 0) origin.x = 0;
+		if (origin.y < 0) origin.y = 0;
 
-        NSRect rect = NSZeroRect;
-        rect.origin = origin;
+		NSRect rect = NSZeroRect;
+		rect.origin = origin;
 
-        // Use ceiling because pixels can be fractions, but the tool assumes integer values
-        rect.size = NSMakeSize(ceil([temp size].width), ceil([temp size].height));
-        
-        [dataSource restoreBufferImageFromData:data];
-        
-        // As always, flip the image to be viewed in our flipped view
-        [SWImageTools flipImageVertical:[dataSource bufferImage]];
+		// Use ceiling because pixels can be fractions, but the tool assumes integer values								 
+		rect.size = NSMakeSize(ceil([temp size].width), ceil([temp size].height));
+		
+		[dataSource restoreBufferImageFromData:data];
+		
+		// As always, flip the image to be viewed in our flipped view
+		[SWImageTools flipImageVertical:[dataSource bufferImage]];
 
-        [(SWSelectionTool *)[toolbox currentTool] setClippingRect:rect
-                                                         forImage:[dataSource bufferImage]
-                                                    withMainImage:[dataSource mainImage]];
-        [temp release];
-        [paintView setNeedsDisplay:YES];
-    }
+		[(SWSelectionTool *)[toolbox currentTool] setClippingRect:rect
+														 forImage:[dataSource bufferImage]
+													withMainImage:[dataSource mainImage]];
+		[temp release];
+		[paintView setNeedsDisplay:YES];
+	}
 }
 
 
@@ -613,7 +634,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 								  bufferImage:[dataSource bufferImage] 
 								   mouseEvent:MOUSE_UP];
 	
-	[paintView cursorUpdate:[NSApp currentEvent]]; // TODO: (jarrodnorwell) check this
+	[paintView cursorUpdate:nil];
 	[paintView setNeedsDisplay:YES];
 }
 
@@ -676,7 +697,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		id object;
 		for (object in array) 
 		{
-            if ([object isEqualToString:NSPasteboardTypeTIFF])
+			if ([object isEqualToString:NSTIFFPboardType] || [object isEqualToString:NSPICTPboardType])
 				paste = YES;
 		}
 		return paste;

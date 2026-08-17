@@ -20,23 +20,21 @@
 #import <Cocoa/Cocoa.h>
 
 @class SWToolboxController;
-@class SWTool;
 @class SWDocument;
 
-@interface SWToolbox : NSObject 
-{
+@class SWJNTool;
+
+@interface SWToolbox : NSObject  {
 	NSMutableDictionary *toolList;
 	SWToolboxController *sharedController;
 	
-	// The currently-selected tool
-	SWTool *currentTool;
+	SWJNTool *currentTool;
 }
 
-@property (retain,nonatomic) SWTool *currentTool;
+@property (nonatomic, retain) SWJNTool *currentTool;
 
-- (id)initWithDocument:(SWDocument *)doc;
-+ (NSArray *)toolClassList;
-- (SWTool *)toolForLabel:(NSString *)label;
-- (void)tieUpLooseEndsForCurrentTool;
-
+-(SWToolbox *) initWithDocument:(SWDocument *)document;
++(NSArray<id> *) toolClassList;
+-(SWJNTool *) toolForLabel:(NSString *)label;
+-(void) finaliseForCurrentTool;
 @end

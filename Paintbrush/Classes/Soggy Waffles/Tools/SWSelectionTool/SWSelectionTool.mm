@@ -22,6 +22,8 @@
 #import "SWDocument.h"
 #import "SWImageTools.h"
 
+#import "Paintbrush-Swift.h"
+
 @implementation SWSelectionTool
 
 @synthesize oldOrigin;
@@ -113,6 +115,7 @@
 			previousPoint = point;
 			
 			// Do the moving thing
+            // [[SWJNImageTools shared] clearWithImage:bufferImage in:NSZeroRect];
 			[SWImageTools clearImage:bufferImage];
 			clippingRect.origin.x = oldOrigin.x + deltax;
 			clippingRect.origin.y = oldOrigin.y + deltay;
@@ -143,6 +146,7 @@
 		// Still drawing the dotted line
 		deltax = deltay = 0;
 
+        // [[SWJNImageTools shared] clearWithImage:bufferImage in:NSZeroRect];
 		[SWImageTools clearImage:bufferImage];
 		
 		// Taking care of the outer bounds of the image
@@ -170,11 +174,15 @@
 				// Copy the rectangle's contents to the second image
 				originalImageCopy = [[NSBitmapImageRep alloc] initWithData:[mainImage TIFFRepresentation]];
 				
+                // [[SWJNImageTools shared] clearWithImage:bufferImage in:NSZeroRect];
 				[SWImageTools clearImage:bufferImage];
 				
 				// Prepare the two image: one with transparency, and one without
+                // selImageSansTransparency = [[SWJNImageTools shared] cropWithImage:mainImage to:clippingRect];
+                // selImageWithTransparency = [[SWJNImageTools shared] cropWithImage:mainImage to:clippingRect];
 				selImageSansTransparency = [SWImageTools cropImage:mainImage toRect:clippingRect];
 				selImageWithTransparency = [SWImageTools cropImage:mainImage toRect:clippingRect];
+                // [[SWJNImageTools shared] removeWithColor:backColor from:selImageWithTransparency];
 				[SWImageTools stripImage:selImageWithTransparency ofColor:backColor];
 				
 				// Now if we should, remove the background of the image
@@ -210,6 +218,7 @@
 	// Draw the backed image to the overlay
 	if (_bufferImage) 
 	{
+        // [[SWJNImageTools shared] clearWithImage:_bufferImage in:NSZeroRect];
 		[SWImageTools clearImage:_bufferImage];
 		SWLockFocus(_bufferImage);
 		if (selectedImage)
@@ -270,8 +279,10 @@
 	if (_mainImage)
 	{
         NSBitmapImageRep * __autoreleasing tempMainCopy = nil;
-        [SWImageTools initImageRep:&tempMainCopy withSize:[_mainImage size]];
+        tempMainCopy = [[SWJNImageTools shared] initializeWith:_mainImage.size];
+        // [SWImageTools initImageRep:&tempMainCopy withSize:[_mainImage size]];
         mainImageCopy = tempMainCopy;
+        // [[SWJNImageTools shared] drawTo:mainImageCopy from:_mainImage at: NSZeroPoint with:NO];
 		[SWImageTools drawToImage:mainImageCopy fromImage:_mainImage withComposition:NO];
 	}
 
@@ -282,6 +293,7 @@
 		if (originalImageCopy)
 		{
 			// Re-set the _mainImage to originalImageCopy for the undo to work properly
+            // [[SWJNImageTools shared] drawTo:_mainImage from:originalImageCopy at:NSZeroPoint with:NO];
 			[SWImageTools drawToImage:_mainImage fromImage:originalImageCopy withComposition:NO];
 			[document handleUndoWithImageData:nil frame:NSZeroRect];
 			
@@ -293,8 +305,12 @@
 	// Checking to see if references have been made; otherwise causes strange drawing bugs
 	if (_mainImage)
 	{
+        // [[SWJNImageTools shared] drawTo:mainImageCopy
+        //                            from:selectedImage
+        //                              at:NSMakePoint(oldOrigin.x + deltax, oldOrigin.y + deltay)
+        //                            with:YES];
 		[SWImageTools drawToImage:mainImageCopy
-						fromImage:selectedImage 
+						fromImage:selectedImage
 						  atPoint:NSMakePoint(oldOrigin.x + deltax, oldOrigin.y + deltay)
 				  withComposition:YES];
 
@@ -302,14 +318,16 @@
 		[super addRectToRedrawRect:NSMakeRect(0,0,[mainImageCopy size].width,[mainImageCopy size].height)];
 		
 		// Finally, move all of mainImageCopy to _mainImage
+        // [[SWJNImageTools shared] drawTo:_mainImage from:mainImageCopy at:NSZeroPoint with:NO];
 		[SWImageTools drawToImage:_mainImage fromImage:mainImageCopy withComposition:NO];
-	} 
+	}
 	else
 		[super resetRedrawRect];
 	
 	// Now nuke the buffer image
 	if (_bufferImage)
 	{
+        // [[SWJNImageTools shared] clearWithImage:_bufferImage in:NSZeroRect];
 		[SWImageTools clearImage:_bufferImage];
 		_bufferImage = nil;
 	}
@@ -338,23 +356,29 @@
 	
 	// Create the image to paste
     NSBitmapImageRep *tempSelected = nil;
+    // tempSelected = [[SWJNImageTools shared] initializeWith:_bufferImage.size];
     [SWImageTools initImageRep:&tempSelected withSize:[_bufferImage size]];
     selectedImage = tempSelected;
+    // [[SWJNImageTools shared] lockWithImage:selectedImage];
 	SWLockFocus(selectedImage);
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 	// Create the point to paste at
     NSPoint point = NSMakePoint(clippingRect.origin.x, clippingRect.origin.y + (clippingRect.size.height - selectedImage.size.height));
     [image drawAtPoint:point];
+    // [[SWJNImageTools shared] unlock];
 	SWUnlockFocus(selectedImage);
 	
 	// Make the copies of the image for with/without transparency
 	selImageSansTransparency = selectedImage;
     NSBitmapImageRep * __autoreleasing tempWithTransparency = nil;
+    // tempWithTransparency = [[SWJNImageTools shared] initializeWith:_bufferImage.size];
     [SWImageTools initImageRep:&tempWithTransparency withSize:[_bufferImage size]];
     selImageWithTransparency = tempWithTransparency;
+    // [[SWJNImageTools shared] drawTo:selImageWithTransparency from:selImageSansTransparency at:NSZeroPoint with:NO];
 	[SWImageTools drawToImage:selImageWithTransparency
-					fromImage:selImageSansTransparency 
+					fromImage:selImageSansTransparency
 			  withComposition:NO];
+    // [[SWJNImageTools shared] removeWithColor:backColor from:selImageWithTransparency];
 	[SWImageTools stripImage:selImageWithTransparency ofColor:backColor];
 
 	// Which one should we be using?  Let this method decide

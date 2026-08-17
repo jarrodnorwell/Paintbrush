@@ -21,6 +21,8 @@
 #import "SWEllipseTool.h"
 #import "SWDocument.h"
 
+#import "Paintbrush-Swift.h"
+
 @implementation SWEllipseTool
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
@@ -55,6 +57,7 @@
 	// Use the points clicked to build a redraw rectangle
 	[super addRedrawRectFromPoint:savedPoint toPoint:point];
 	
+    // [[SWJNImageTools shared] clearWithImage:bufferImage in:NSZeroRect];
 	[SWImageTools clearImage:bufferImage];
 	
 	if (event == MOUSE_UP) 
@@ -65,7 +68,8 @@
 	else
 		drawToMe = bufferImage;
 	
-	SWLockFocus(drawToMe); 
+    // [[SWJNImageTools shared] lockWithImage:drawToMe];
+	SWLockFocus(drawToMe);
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
 	
 	// Which colors should we draw with?
@@ -98,6 +102,7 @@
 		[path stroke];
 	}
 	
+    // [[SWJNImageTools shared] unlock];
 	SWUnlockFocus(drawToMe);
 	return nil;
 }

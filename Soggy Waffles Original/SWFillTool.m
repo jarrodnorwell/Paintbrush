@@ -53,8 +53,7 @@
 		_mainImage = mainImage;
 		
 		// Which color are we using?
-        NSColor *color = (flags & NSEventModifierFlagOption) ? backColor : frontColor;
-        fillColor = [color colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+		fillColor = [(flags & NSAlternateKeyMask) ? backColor : frontColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 		
 		// Check to make sure if we should even bother trying to fill - 
 		// if it's the same color, there's nothing to do
@@ -114,14 +113,14 @@
 	// We want to render the image into our bitmap image rep, so create a
 	//	NSGraphicsContext from it.
 	NSGraphicsContext *imageContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:_mainImage];
-    CGContextRef cgContext = [imageContext CGContext];
+	CGContextRef cgContext = [imageContext graphicsPort];
 	
 	// "Focus" our image rep so the NSBitmapImageRep will use it to draw into
 	[NSGraphicsContext saveGraphicsState];
 	[NSGraphicsContext setCurrentContext:imageContext];
 	
 	// For filling with transparent colors
-    [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationCopy];		
+	[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];		
 
 	// Clip out everything that we don't want to fill with the new color
 	CGContextClipToMask(cgContext, CGRectMake(0, 0, w, h), mask);

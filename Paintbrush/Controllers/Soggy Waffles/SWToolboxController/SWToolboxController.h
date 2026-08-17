@@ -27,8 +27,9 @@ typedef enum {
 
 @class SWColorSelector;
 @class SWMatrix;
-@class SWToolbox;
 @class SWDocument;
+
+@class SWToolbox;
 
 @interface SWToolboxController : NSWindowController {	
 	NSColor *foregroundColor;
@@ -50,7 +51,9 @@ typedef enum {
 }
 
 // Accessors
-+ (id)sharedToolboxPanelController;
++ (SWToolboxController *)sharedToolboxPanelController;
+
+@property (nonatomic, assign) IBOutlet NSColorWell *foregroundColorWell, *backgroundColorWell;
 
 // Mutators
 // - (IBAction)changeCurrentTool:(id)sender;

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
+
 #import "SWMatrix.h"
 #import "SWButtonCell.h"
 
@@ -69,4 +69,3 @@
 }
 
 @end
-*/

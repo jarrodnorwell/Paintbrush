@@ -19,10 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SWSlider : NSSlider
-@end
 
-/*
 @interface SWSlider : NSSlider {
 	
 	// This value stores the sum of the user's scrolling. If it passes a threshold 
@@ -31,4 +28,3 @@
 }
 
 @end
-*/

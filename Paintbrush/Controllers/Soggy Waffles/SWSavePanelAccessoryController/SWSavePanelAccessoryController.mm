@@ -23,6 +23,8 @@
 #import "SWSavePanelAccessoryController.h"
 #import "SWDocument.h"
 
+#import "Paintbrush-Swift.h"
+
 
 NSString * const kSWCurrentFileType = @"currentFileType";
 
@@ -85,7 +87,8 @@ NSString * const kSWCurrentFileType = @"currentFileType";
 {
     // Convert the filetype for use as a file extension
     NSString *buttonSelection = [sender titleOfSelectedItem];
-    NSString *finalString = [SWImageTools convertFromFileType:buttonSelection];
+    NSString *finalString = [[SWJNImageTools shared] convertFrom:buttonSelection];
+    // NSString *finalString = [SWImageTools convertFromFileType:buttonSelection];
     
     // Use the explicit mutator, to trigger KVO
     if ([finalString isKindOfClass:[UTType class]])

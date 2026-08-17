@@ -20,10 +20,11 @@
 #import <Cocoa/Cocoa.h>
 
 @class SWToolboxController;
-@class SWToolbox;
 @class SWTool;
 @class SWDocument;
 @class SWImageDataSource;
+
+@class SWToolbox;
 
 @interface SWPaintView : NSView 
 {
@@ -68,6 +69,8 @@
 - (CGFloat)gridSpacing;
 - (NSColor *)gridColor;
 - (NSBezierPath *)gridInRect:(NSRect)rect;
+
+- (void)refreshImage:(id)sender;
 
 @end
 

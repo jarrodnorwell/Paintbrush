@@ -53,19 +53,9 @@ typedef enum {
 + (id)sharedToolboxPanelController;
 
 // Mutators
-// - (IBAction)changeCurrentTool:(id)sender;
-// - (IBAction)changeFillStyle:(id)sender;
+- (IBAction)changeCurrentTool:(id)sender;
+- (IBAction)changeFillStyle:(id)sender;
 - (IBAction)changeSelectionTransparency:(id)sender;
-
--(IBAction) changeCurrentTool:(NSButton *)sender;
--(void) changeCurrentToolWithString:(NSString *)string;
-
--(IBAction) changeBackgroundColor:(NSColorWell *)sender;
--(IBAction) changeForegroundColor:(NSColorWell *)sender;
-
--(IBAction) changeFillStyle:(NSButton *)sender;
-
--(IBAction) changeLineWidth:(NSSlider *)sender;
 
 // Other stuff
 - (void)updateInfo;
@@ -73,7 +63,7 @@ typedef enum {
 - (IBAction)flipColors:(id)sender;
 
 @property (assign) NSInteger lineWidthDisplay;
-// @property (assign,nonatomic) NSInteger lineWidth;
+@property (assign,nonatomic) NSInteger lineWidth;
 @property (assign) BOOL selectionTransparency;
 @property (assign,nonatomic) NSString *currentTool;
 @property (assign) SWFillStyle fillStyle;
@@ -83,6 +73,4 @@ typedef enum {
 @property (readonly) SWDocument *activeDocument;
 //@property (readonly) NSMutableArray *toolListArray;
 
-@property (nonatomic, assign) IBOutlet NSButton *previousButton;
-@property (nonatomic, assign) IBOutlet NSImageView *imageView;
 @end

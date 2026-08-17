@@ -103,7 +103,7 @@
 // After they click OK or Cancel
 - (IBAction)endSheet:(id)sender
 {
-	if ([sender tag] == NSModalResponseOK) {
+	if ([sender tag] == NSOKButton) {
 		if ([widthFieldNew integerValue] > 0 && [heightFieldNew integerValue] > 0) {
 			
 			// Save entered values as defaults
@@ -114,14 +114,14 @@
 //			[defaults setObject:height forKey:@"VerticalSize"];
 			
 			[[self window] orderOut:sender];
-            [NSApp endSheet:[self window] returnCode:NSModalResponseOK];
+			[NSApp endSheet:[self window] returnCode:NSOKButton];
 		} else {
 			NSBeep();
 		}
 	} else {
 		// They clicked cancel
 		[[self window] orderOut:sender];
-        [NSApp endSheet:[self window] returnCode:NSModalResponseCancel];
+		[NSApp endSheet:[self window] returnCode:NSCancelButton];
 	}	
 }
 

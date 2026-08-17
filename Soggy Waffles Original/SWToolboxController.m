@@ -29,7 +29,7 @@
 
 @implementation SWToolboxController
 
-// @synthesize lineWidth;
+@synthesize lineWidth;
 @synthesize selectionTransparency;
 @synthesize currentTool;
 @synthesize fillStyle;
@@ -78,9 +78,9 @@
 		
 	
 		// Do some other initialization stuff
-        [NSBezierPath setDefaultLineCapStyle:NSLineCapStyleRound];
-        [NSBezierPath setDefaultLineJoinStyle:NSLineJoinStyleRound];
-        [NSBezierPath setDefaultWindingRule:NSWindingRuleEvenOdd];
+		[NSBezierPath setDefaultLineCapStyle:NSRoundLineCapStyle];
+		[NSBezierPath setDefaultLineJoinStyle:NSRoundLineJoinStyle];
+		[NSBezierPath setDefaultWindingRule:NSEvenOddWindingRule];
 	}
 	
 	return self;
@@ -99,10 +99,7 @@
 	[self setBackgroundColor:[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
 	[self setFillStyle:STROKE_ONLY];
 	[self setSelectionTransparency:NO];
-    
-    if ([currentTool isEqualToString:@""] && _previousButton)
-        [_previousButton setContentTintColor:[NSColor systemBlueColor]];
-    [self changeCurrentToolWithString:@"Brush"];
+	[self changeCurrentTool:toolMatrix];	
 }
 
 
@@ -114,10 +111,7 @@
 	[self setBackgroundColor:[self backgroundColor]];
 	[self setFillStyle:[self fillStyle]];
 	[self setSelectionTransparency:[self selectionTransparency]];
-    
-    if ([currentTool isEqualToString:@""] && _previousButton)
-        [_previousButton setContentTintColor:[NSColor systemBlueColor]];
-    [self changeCurrentToolWithString:@"Brush"];
+	[self changeCurrentTool:toolMatrix];	
 }
 
 
@@ -126,8 +120,6 @@
 {
 	// Allows for more line widths with less tick marks
 	lineWidth = 2*width - 2;
-    NSString *systemSymbolName = [NSString stringWithFormat:@"%@.circle.fill", [[NSNumber numberWithInteger:width] stringValue]];
-    _imageView.image = [NSImage imageWithSystemSymbolName:systemSymbolName accessibilityDescription:nil];
 
 	//[currentTool setLineWidth:lineWidth];
 }
@@ -173,7 +165,7 @@
 	// At the moment, most of the keyboard shortcuts are set in Interface Builder
 	NSUInteger modifiers = [event modifierFlags];
 	
-    if (modifiers & NSEventModifierFlagOption) {
+	if (modifiers & NSAlternateKeyMask) {
 		// They held option
 		if ([event keyCode] == 125) {
 			// They pressed down
@@ -203,38 +195,20 @@
 	[self setBackgroundColor:tempColor];
 }
 
--(IBAction) changeCurrentTool:(NSButton *)sender {
-    [sender setContentTintColor:[NSColor systemBlueColor]];
-    if (_previousButton)
-        [_previousButton setContentTintColor:NULL];
-    _previousButton = sender;
-    
-    NSString *string = sender.title;
-    if (string && ![string isEqualToString:@""])
-        [self setCurrentTool:string];
+
+// We use the title of the cell to indicate which tool to use
+//TODO: Make this localization-friendly
+- (IBAction)changeCurrentTool:(id)sender
+{
+	NSString *string = [[sender selectedCell] title];
+	if (string && ![string isEqualToString:@""])
+		[self setCurrentTool:string];
 }
 
--(void) changeCurrentToolWithString:(NSString *)string {
-    if (string && ![string isEqualToString:@""])
-        [self setCurrentTool:[NSString stringWithFormat:@"%@", string]];
-}
 
--(IBAction) changeBackgroundColor:(NSColorWell *)sender {
-    NSColor *color = [sender color];
-    [self setBackgroundColor:color];
-}
-
--(IBAction) changeForegroundColor:(NSColorWell *)sender {
-    NSColor *color = [sender color];
-    [self setForegroundColor:color];
-}
-
--(IBAction) changeFillStyle:(NSButton *)sender {
-    [self setFillStyle:sender.tag];
-}
-
--(IBAction) changeLineWidth:(NSSlider *)sender {
-    [self setLineWidth:sender.integerValue];
+- (IBAction)changeFillStyle:(id)sender
+{
+	[self setFillStyle:[sender selectedTag]];
 }
 
 
@@ -251,8 +225,8 @@
 	{
 		if ([[cell title] isEqualToString:@"Selection"])
 		{
-			// [toolMatrix selectCell:cell];
-            // [self changeCurrentToolWithString:@""];
+			[toolMatrix selectCell:cell];
+			[self changeCurrentTool:toolMatrix];
 			break;
 		}
 	}

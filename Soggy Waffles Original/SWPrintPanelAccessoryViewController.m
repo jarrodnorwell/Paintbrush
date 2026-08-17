@@ -42,9 +42,9 @@
 - (void)setScaling:(BOOL)flag
 {
 	NSPrintInfo *printInfo = [self representedObject];
-    [[printInfo dictionary] setObject:[NSNumber numberWithInteger:(flag ? NSPrintingPaginationModeFit : NSPrintingPaginationModeAutomatic)] 
+    [[printInfo dictionary] setObject:[NSNumber numberWithInteger:(flag ? NSFitPagination : NSAutoPagination)] 
 							   forKey:NSPrintHorizontalPagination];
-    [[printInfo dictionary] setObject:[NSNumber numberWithInteger:(flag ? NSPrintingPaginationModeFit : NSPrintingPaginationModeAutomatic)] 
+    [[printInfo dictionary] setObject:[NSNumber numberWithInteger:(flag ? NSFitPagination : NSAutoPagination)] 
 							   forKey:NSPrintVerticalPagination];	
 }
 
@@ -52,7 +52,7 @@
 - (BOOL)scaling
 {
 	NSPrintInfo *printInfo = [self representedObject];
-    return ( [[[printInfo dictionary] objectForKey:NSPrintVerticalPagination] integerValue] ) == NSPrintingPaginationModeFit;
+    return ( [[[printInfo dictionary] objectForKey:NSPrintVerticalPagination] integerValue] ) == NSFitPagination;
 }
 
 

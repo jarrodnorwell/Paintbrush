@@ -20,7 +20,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SWSizeWindowController : NSWindowController <NSMenuItemValidation> {
+@interface SWSizeWindowController : NSWindowController {
 	IBOutlet NSPopUpButton *sizeButton;
 	IBOutlet NSMenuItem *clipboard;
 	

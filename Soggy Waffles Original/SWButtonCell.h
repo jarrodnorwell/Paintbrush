@@ -19,10 +19,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SWButton : NSButton
-@end
-
-/*
 
 @interface SWButtonCell : NSButtonCell {
 	NSImage *altImage;
@@ -35,4 +31,3 @@
 - (void)setIsHovered:(BOOL)flag;
 
 @end
-*/

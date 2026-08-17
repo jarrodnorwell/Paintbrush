@@ -301,7 +301,7 @@ static void MaskDataProviderReleaseDataCallback(void *info, const void *data, si
 		//		if (mPickedPixel[i] != pixel[i]) {
 		//			return -1;
 		//		}
-        unsigned int difference = labs((long)mPickedPixel[i] - (long)pixel[i]);
+		unsigned int difference = abs((long)mPickedPixel[i] - (long)pixel[i]);
 		if ( difference > maxDifference )
 			maxDifference = difference;
 	}

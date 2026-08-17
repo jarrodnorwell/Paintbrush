@@ -21,6 +21,8 @@
 #import "SWDocument.h"
 #import "SWImageTools.h"
 
+#import "Paintbrush-Swift.h"
+
 @implementation SWBombTool
 
 - (NSBezierPath *)pathFromPoint:(NSPoint)begin toPoint:(NSPoint)end
@@ -76,6 +78,7 @@
 		rect.size.height = 2*i;
 		
 		// Perform the actual drawing
+        // [[SWJNImageTools shared] lockWithImage:_mainImage];
 		SWLockFocus(_mainImage);
 		
 		//SWClearImageRect(image, rect);
@@ -87,6 +90,7 @@
 		[bombColor set];
 		[[NSBezierPath bezierPathWithOvalInRect:rect] fill];
 		[NSGraphicsContext restoreGraphicsState];
+        // [[SWJNImageTools shared] unlock];
 		SWUnlockFocus(_mainImage);
 		
 		// Change the redraw rect
@@ -111,11 +115,14 @@
 	[timer invalidate];
 	[document handleUndoWithImageData:nil frame:NSZeroRect];
 	
-	SWLockFocus(_mainImage);	
+    // [[SWJNImageTools shared] lockWithImage:_mainImage];
+	SWLockFocus(_mainImage);
 	[bombColor set];
 	NSRectFill(NSMakeRect(0,0,[_mainImage size].width, [_mainImage size].height));
+    // [[SWJNImageTools shared] unlock];
 	SWUnlockFocus(_mainImage);
 
+    // [[SWJNImageTools shared] clearWithImage:_bufferImage in:NSZeroRect];
 	[SWImageTools clearImage:_bufferImage];
 	[NSApp sendAction:@selector(refreshImage:)
 				   to:nil

@@ -22,6 +22,8 @@
 #import "SWDocument.h"
 #import "SWPaintView.h"
 
+#import "Paintbrush-Swift.h"
+
 @implementation SWTextTool
 
 - (id)initWithController:(SWToolboxController *)controller
@@ -50,8 +52,9 @@
 	_mainImage = mainImage;
 	_bufferImage = bufferImage;
 	
+    // [[SWJNImageTools shared] clearWithImage:bufferImage in:NSZeroRect];
 	[SWImageTools clearImage:bufferImage];
-	if (canInsert) 
+	if (canInsert)
 	{
 		if (event == MOUSE_MOVED)
 			drawToMe = bufferImage;

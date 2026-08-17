@@ -44,22 +44,22 @@
 	}
 	
 	// Shift should only affect the line on the first click
-    if (numberOfClicks == 1 && (flags & NSEventModifierFlagShift)) {		
+	if (numberOfClicks == 1 && (flags & NSShiftKeyMask)) {		
 		// x and y are either positive or negative 1
-        NSInteger x = (end.x-begin.x) / fabs(end.x-begin.x);
-        NSInteger y = (end.y-begin.y) / fabs(end.y-begin.y);
+		NSInteger x = (end.x-begin.x) / abs(end.x-begin.x);
+		NSInteger y = (end.y-begin.y) / abs(end.y-begin.y);
 		
 		// Theta is the angle formed by the mouse, in degrees (rad * 180/π)
 		// atan()'s result is in radians
-		CGFloat theta = 180*atan((end.y-begin.y)/(end.x-begin.x)) / M_PI;
+		CGFloat theta = 180*atan((end.y-begin.y)/(end.x-begin.x)) / pi;
 		
 		// Deciding whether it should be horizontal, vertical, or at 45º
-        CGFloat size = fmin(fabs(end.x-begin.x),fabs(end.y-begin.y));
+		CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
 		
 		// Deciding whether it should be horizontal, vertical, or at 45º
-        if (fabs(theta) <= 67.5 && fabs(theta) >= 22.5) {
+		if (abs(theta) <= 67.5 && abs(theta) >= 22.5) {
 			endPoint = NSMakePoint(size*x + beginPoint.x, size*y + beginPoint.y);
-        } else if (fabs(theta) > 67.5) {
+		} else if (abs(theta) > 67.5) {
 			endPoint = NSMakePoint(0+beginPoint.x, (endPoint.y-beginPoint.y)+beginPoint.y);
 		} else {
 			endPoint = NSMakePoint((endPoint.x - beginPoint.x)+beginPoint.x, 0+beginPoint.y);
@@ -82,7 +82,7 @@
 {	
 	if (event == MOUSE_DOWN) {
 		numberOfClicks++;
-        primaryColor = (flags & NSEventModifierFlagOption) ? backColor : frontColor;
+		primaryColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
 	}
 	
 	[SWImageTools clearImage:bufferImage];

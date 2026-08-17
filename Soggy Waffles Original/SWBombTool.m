@@ -45,9 +45,9 @@
 		_mainImage = mainImage;
 		
 		// We do this to make a copy of the color
-        bombColor = (flags & NSEventModifierFlagOption) ? frontColor : backColor;
+		bombColor = (flags & NSAlternateKeyMask) ? frontColor : backColor;
 		
-        if (flags & NSEventModifierFlagShift) {
+		if (flags & NSShiftKeyMask) {
 			bombSpeed = 2;
 		} else {
 			bombSpeed = 50;
@@ -82,7 +82,7 @@
 //		[[NSColor clearColor] set];
 //		[[NSBezierPath bezierPathWithOvalInRect:rect] fill];
 		[NSGraphicsContext saveGraphicsState];
-        [[NSGraphicsContext currentContext] setCompositingOperation:NSCompositingOperationCopy];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositeCopy];
 		[bombColor set];
 		[[NSBezierPath bezierPathWithOvalInRect:rect] fill];
 		[NSGraphicsContext restoreGraphicsState];
@@ -95,7 +95,6 @@
 		[NSApp sendAction:@selector(refreshImage:)
 					   to:nil
 					 from:self];
-        [self performSelector:@selector(refreshImage:) withObject:nil];
 		
 		// bombSpeed == either 2 or 25, depending on the shift
 		i += bombSpeed;

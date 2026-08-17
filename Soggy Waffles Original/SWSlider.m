@@ -21,10 +21,6 @@
 #import "SWToolboxController.h"
 
 @implementation SWSlider
-@end
-
-/*
-@implementation SWSlider
 
 // We override this method of NSResponder so that when the user scrolls while hovering
 // over the scroller, the value changes. This works for both X and Y scrolling, though
@@ -56,4 +52,3 @@
 
 
 @end
-*/

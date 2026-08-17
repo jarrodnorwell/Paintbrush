@@ -44,7 +44,7 @@ static unsigned defaultIndex = 2;
 		
         // create it
 		scalePopUpButton = [[NSPopUpButton allocWithZone:[self zone]] initWithFrame:NSMakeRect(0.0, 0.0, 1.0, 1.0) pullsDown:NO];
-        [(NSPopUpButtonCell *)[scalePopUpButton cell] setBezelStyle:NSBezelStyleShadowlessSquare];
+		[(NSPopUpButtonCell *)[scalePopUpButton cell] setBezelStyle:NSShadowlessSquareBezelStyle];
 		//[scalePopUpButton setBezelStyle:NSShadowlessSquareBezelStyle];
 		[[scalePopUpButton cell] setArrowPosition:NSPopUpArrowAtBottom];
         
@@ -133,90 +133,86 @@ static unsigned defaultIndex = 2;
 	
 	SWCenteringClipView *clipView = (SWCenteringClipView *)[[self documentView] superview];
 	NSSize size = [clipView bounds].size;
-    
+
+	// Sets the top-left corner to the point clicked
+	// NO NEED WHEN THE VIEW IS FLIPPED, as it is starting with v2.1
+//	point.y = [clipView documentRect].size.height - point.y - 1;
+	
+	// Scroll to the correct centered spot thing
 	point.x -= size.width / 2;
 	point.y -= size.height / 2;
-    
-    NSRect bounds = [clipView bounds];
-    bounds.origin = point;
-
-    bounds = [clipView constrainBoundsRect:bounds];
-    [clipView setBounds:bounds];
+	[clipView setBoundsOrigin:[clipView constrainScrollPoint:point]];
 }
 
 
 - (void)setScaleFactor:(CGFloat)newScaleFactor adjustPopup:(BOOL)flag 
 {
     if (scaleFactor != newScaleFactor) {
-        SWCenteringClipView *clipView = (SWCenteringClipView *)[[self documentView] superview];
-
-        if (flag) {
-            NSInteger cnt = 0;
-            NSInteger numberOfDefaultItems = sizeof(scaleMenuFactors) / sizeof(CGFloat);
-
-            while (cnt < numberOfDefaultItems &&
-                   newScaleFactor * 0.99 > scaleMenuFactors[cnt]) {
-                cnt++;
-            }
-
+		NSSize curDocFrameSize, newDocBoundsSize, curDocBoundsSize;
+		NSPoint newDocBoundsOrigin;
+		// Make a backup!
+		//CGFloat oldScaleFactor = scaleFactor;
+		
+		SWCenteringClipView *clipView = (SWCenteringClipView *)[[self documentView] superview];
+		
+        if (flag) {	// Coming from elsewhere, first validate it
+            NSInteger cnt = 0, numberOfDefaultItems = (sizeof(scaleMenuFactors) / sizeof(CGFloat));
+			
+            // We only work with the preset zoom values, so choose one of the appropriate values 
+			//  (Fudge a little for floating point comparison to work)
+            while (cnt < numberOfDefaultItems && newScaleFactor * .99 > scaleMenuFactors[cnt]) {
+				cnt++;
+			}
             if (cnt == numberOfDefaultItems) {
-                cnt--;
-                return;
-            }
-
+				cnt--;
+				return;
+			}
             [scalePopUpButton selectItemAtIndex:cnt];
             scaleFactor = scaleMenuFactors[cnt];
         } else {
             scaleFactor = newScaleFactor;
         }
-        
-        NSRect bounds = [clipView bounds];
-        NSSize oldBoundsSize = bounds.size;
+				
+		// Get the frame.  The frame must stay the same.
+		curDocFrameSize = [clipView frame].size;
+		
+		// Get the size for fun calculations
+		curDocBoundsSize = [clipView bounds].size;
+		
+		// The new bounds will be frame divided by scale factor
+		newDocBoundsSize.width = curDocFrameSize.width / scaleFactor;
+		newDocBoundsSize.height = curDocFrameSize.height / scaleFactor;
+				
+		// Likewise, adjust the bottom-left corner to maintain centered-ness
+		newDocBoundsOrigin.x = [clipView bounds].origin.x + (curDocBoundsSize.width - newDocBoundsSize.width) / 2;
+		newDocBoundsOrigin.y = [clipView bounds].origin.y + (curDocBoundsSize.height - newDocBoundsSize.height) / 2;
 
-        NSSize frameSize = [clipView frame].size;
-
-        bounds.size.width = frameSize.width / scaleFactor;
-        bounds.size.height = frameSize.height / scaleFactor;
-
-        bounds.origin.x += (oldBoundsSize.width - bounds.size.width) / 2.0;
-        bounds.origin.y += (oldBoundsSize.height - bounds.size.height) / 2.0;
-        
-        bounds = [clipView constrainBoundsRect:bounds];
-        [clipView setBounds:bounds];
-        
-        NSRect frame = [[self window] frame];
-
-        if (scaleFactor > 1.0) {
-            CGFloat scrollerWidth =
-                [NSScroller scrollerWidthForControlSize:NSControlSizeRegular
-                                          scrollerStyle:[NSScroller preferredScrollerStyle]];
-
-            NSRect contentRect =
-                [[self window] contentRectForFrameRect:
-                    NSMakeRect(0,
-                               0,
-                               frame.size.width - scrollerWidth,
-                               frame.size.height - scrollerWidth)];
-
-            contentRect.size.width =
-                round(contentRect.size.width / scaleFactor) * scaleFactor + scrollerWidth;
-
-            contentRect.size.height =
-                round(contentRect.size.height / scaleFactor) * scaleFactor + scrollerWidth;
-
-            frame.size = [[self window] frameRectForContentRect:contentRect].size;
-        }
-
-        CGFloat resizeFactor = fmax(1.0, scaleFactor);
-
-        [[self window] setResizeIncrements:
-            NSMakeSize(resizeFactor, resizeFactor)];
-
-        [[self window] setFrame:frame display:YES animate:YES];
-        
-        bounds = [clipView constrainBoundsRect:[clipView bounds]];
-        [clipView setBounds:bounds];
-    }
+		// Finally, inform the clip view of the changes we've made		
+		[clipView setBoundsSize:newDocBoundsSize];
+		[clipView setBoundsOrigin:newDocBoundsOrigin];
+		
+		// Make sure the window size is correct
+		NSRect frame = [[self window] frame];
+				
+		// Initially constrain the window size
+		if (scaleFactor > 1.0) {
+			NSRect contentRect = [[self window] contentRectForFrameRect:NSMakeRect(0,0,frame.size.width-[NSScroller scrollerWidth],
+																				   frame.size.height-[NSScroller scrollerWidth])];
+			contentRect.size.width =  round(contentRect.size.width / scaleFactor) * scaleFactor + [NSScroller scrollerWidth];
+			contentRect.size.height = round(contentRect.size.height / scaleFactor) * scaleFactor + [NSScroller scrollerWidth];
+			
+			NSRect newRect = [[self window] frameRectForContentRect:contentRect];
+			
+			frame.size = newRect.size;
+		}
+		
+		CGFloat factor = fmax(1.0, scaleFactor);
+		[[self window] setResizeIncrements:NSMakeSize(factor, factor)];
+		[[self window] setFrame:frame display:YES animate:YES];
+		
+		// Constrain the origin
+		[clipView setBoundsOrigin:[clipView constrainScrollPoint:[clipView bounds].origin]];
+	}
 }
 
 - (BOOL)isFlipped

@@ -63,7 +63,7 @@
 	path = [NSBezierPath bezierPath];
 	[path setLineWidth:1.0];
 	[path setLineDash:dottedLineArray count:2 phase:dottedLineOffset];
-    [path setLineCapStyle:NSLineCapStyleSquare];	
+	[path setLineCapStyle:NSSquareLineCapStyle];	
 	
 	// The 0.5s help because the width is 1, and that does weird stuff
 	[path appendBezierPathWithRect:
@@ -162,7 +162,7 @@
 			
 			// Create the clipping rect based on these two new points
 			clippingRect = NSMakeRect(fmin(savedPoint.x, point.x), fmin(savedPoint.y, point.y), 
-                                      fabs(point.x - savedPoint.x), fabs(point.y - savedPoint.y));
+									  abs(point.x - savedPoint.x), abs(point.y - savedPoint.y));
 
 			if (event == MOUSE_UP) 
 			{
@@ -348,10 +348,7 @@
 	[[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationNone];
 	// Create the point to paste at
 	NSPoint point = NSMakePoint(clippingRect.origin.x, clippingRect.origin.y + (clippingRect.size.height - selectedImage.size.height));
-    [image drawInRect:NSMakeRect(point.x,
-                                 point.y,
-                                 image.pixelsWide,
-                                 image.pixelsHigh)];
+	[image drawAtPoint:point];
 	SWUnlockFocus(selectedImage);
 	
 	// Make the copies of the image for with/without transparency

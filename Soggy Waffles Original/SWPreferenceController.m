@@ -83,9 +83,11 @@
 														object:[NSNumber numberWithInteger:[sender integerValue]]];
 }
 
--(void) controlTextDidChange:(NSNotification *)aNotification {
-	if ([aNotification object] == undoTextField)
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+	if ([aNotification object] == undoTextField) {
 		[self changeUndoLimit:[aNotification object]];
+	}
 }
 
 

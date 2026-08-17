@@ -21,9 +21,9 @@
 #import "SWToolboxController.h"
 #import "SWToolbox.h"
 #import "SWToolList.h"
-#import "SWColorSelector.h"
 #import "SWDocument.h"
-#import "SWMatrix.h"
+
+#import "Paintbrush-Swift.h"
 
 // Heights for the panel, based on what is shown
 #define LARGE_HEIGHT 467
@@ -55,7 +55,7 @@
 }
 
 
-+ (id)sharedToolboxPanelController
++ (SWToolboxController *)sharedToolboxPanelController
 {
 	// By calling it static, a second instance of the pointer will never be created
 	static SWToolboxController *sharedController;
@@ -152,14 +152,15 @@
 	// Don't tie up loose ends if there's no tool!
 	currentTool = tool;
 	
-	SWTool *tempTool = [toolbox toolForLabel:currentTool];
+	SWJNTool *tempTool = [toolbox toolForLabel:currentTool];
 		
-	[fillMatrix setHidden:(![tempTool shouldShowFillOptions])];
-	[transparencyMatrix setHidden:(![tempTool shouldShowTransparencyOptions])];
+    // TODO: reimplement fill and transparency
+	// [fillMatrix setHidden:!tempTool.showFillOptions];
+    // [transparencyMatrix setHidden:!tempTool.showTransparencyOptions];
 	
 	// Handle resizing of tool palette, based on which tool is selected
 	NSRect aRect = [[super window] frame];
-	if ([tempTool shouldShowFillOptions] || [tempTool shouldShowTransparencyOptions]) {
+	if (tempTool.showFillOptions || tempTool.showTransparencyOptions) {
 		aRect.origin.y += (aRect.size.height - LARGE_HEIGHT);
 		aRect.size.height = LARGE_HEIGHT;
 	} else {
@@ -249,6 +250,7 @@
 // If "Paste" or "Select All" is chosen, we should switch to the scissors tool
 - (void)switchToScissors:(id)sender
 {
+    /*
 	for (NSCell *cell in [toolMatrix cells])
 	{
 		if ([[cell title] isEqualToString:@"Selection"])
@@ -257,7 +259,7 @@
             // [self changeCurrentToolWithString:@""];
 			break;
 		}
-	}
+	}*/
 }
 
 

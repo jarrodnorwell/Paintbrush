@@ -63,14 +63,14 @@
 	{
 		[pressedImage drawAtPoint:NSZeroPoint 
 						 fromRect:NSZeroRect 
-                        operation:NSCompositingOperationSourceOver 
+						operation:NSCompositeSourceOver 
 						 fraction:1.0];	
 	} 
 	else if (isHovered) 
 	{
 		[hovImage drawAtPoint:NSZeroPoint 
 					 fromRect:NSZeroRect 
-                    operation:NSCompositingOperationSourceOver 
+					operation:NSCompositeSourceOver 
 					 fraction:1.0];
 	}
 	

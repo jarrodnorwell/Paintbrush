@@ -23,6 +23,8 @@
 #import "SWPaintView.h"
 #import "SWDocument.h"
 
+#import "Paintbrush-Swift.h"
+
 @implementation SWToolbox
 
 @synthesize currentTool;
@@ -34,12 +36,10 @@
 	sharedController = [SWToolboxController sharedToolboxPanelController];
 	
 	// Create the dictionary
-	toolList = [[NSMutableDictionary alloc] initWithCapacity:14];
-	for (Class c in [SWToolbox toolClassList]) 
-	{
-		SWTool *tool = [[c alloc] initWithController:sharedController];
-		[tool setDocument:doc];
-		[toolList setObject:tool forKey:[tool description]];
+	toolList = [[NSMutableDictionary alloc] initWithCapacity:7];
+	for (Class c in [SWToolbox toolClassList]) {
+        SWJNTool *tool = [[c alloc] initWithDocument:doc paintView:doc.paintView toolbox:doc.toolbox toolboxController:sharedController];
+        [toolList setObject:tool forKey:[tool description]];
 	}
 	
 	[sharedController addObserver:self 
@@ -65,15 +65,15 @@
 
 
 // Here's the setter for the tool: make sure you wrap up loose ends for the previous tool!
-- (void)setCurrentTool:(SWTool *)tool
+- (void)setCurrentTool:(id)tool
 {
-	[currentTool tieUpLooseEnds];
+	[currentTool finalise];
 	currentTool = tool;
     
     
-    SWToolboxController *controller = [SWToolboxController sharedToolboxPanelController];
-    SWDocument *document = [controller activeDocument];
-    SWPaintView *view = [document paintView];
+    // SWToolboxController *controller = [SWToolboxController sharedToolboxPanelController];
+    // SWDocument *document = [controller activeDocument];
+    // SWPaintView *view = [document paintView];
     // [view cursorUpdate:[NSApp currentEvent]];
     
 }
@@ -88,34 +88,39 @@
 	id thing = [change objectForKey:NSKeyValueChangeNewKey];
 	
 	if ([keyPath isEqualToString:@"currentTool"]) {
-		SWTool *tool = [self toolForLabel:thing];
-		if (tool) {
-			[self setCurrentTool:tool];
-		}
+		SWJNTool *tool = [self toolForLabel:thing];
+        [self setCurrentTool:tool];
 	}
 }
 
 
 // Which tool comes from which label?
-- (SWTool *)toolForLabel:(NSString *)label
+- (SWJNTool *)toolForLabel:(NSString *)label
 {
 	return [toolList objectForKey:[NSString stringWithString:label]];
 }
 
 
-+ (NSArray *)toolClassList
-{
-	return [NSArray arrayWithObjects:[SWBrushTool class], [SWEraserTool class], [SWSelectionTool class], 
-			[SWAirbrushTool class], [SWFillTool class], [SWBombTool class], [SWLineTool class], 
-			[SWCurveTool class], [SWRectangleTool class], [SWEllipseTool class], [SWRoundedRectangleTool class], 
-			[SWTextTool class], [SWEyedropperTool class], [SWZoomTool class], nil];
++(NSArray<id> *) toolClassList {
+    return @[
+        [SWJNBrushTool class],
+        [SWJNEraserTool class],
+        [SWJNAirbrushTool class],
+        [SWJNLineTool class],
+        [SWJNTextTool class],
+        [SWJNEyedropperTool class],
+        [SWJNZoomTool class]
+    ];
+    
+    /*
+	return [NSArray arrayWithObjects:[SWBrushTool class], [SWEraserTool class], [SWSelectionTool class],
+			[SWJNAirbrushTool class], [SWFillTool class], [SWBombTool class], [SWLineTool class],
+			[SWCurveTool class], [SWRectangleTool class], [SWEllipseTool class], [SWRoundedRectangleTool class],
+			[SWTextTool class], [SWEyedropperTool class], [SWZoomTool class], nil];*/
 }
 
 
-- (void)tieUpLooseEndsForCurrentTool
-{
-	[currentTool tieUpLooseEnds];
+-(void) finaliseForCurrentTool {
+	[currentTool finalise];
 }
-
-
 @end

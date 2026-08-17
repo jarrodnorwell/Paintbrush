@@ -34,23 +34,23 @@
 		end.x += 0.5;
 		end.y += 0.5;
 	}
-    if (flags & NSEventModifierFlagShift) {
+	if (flags & NSShiftKeyMask) {
 		// x and y are either positive or negative 1
-        NSInteger x = (end.x-begin.x) / fabs(end.x-begin.x);
-        NSInteger y = (end.y-begin.y) / fabs(end.y-begin.y);
+		NSInteger x = (end.x-begin.x) / abs(end.x-begin.x);
+		NSInteger y = (end.y-begin.y) / abs(end.y-begin.y);
 		
 		// Theta is the angle formed by the mouse, in degrees (rad * 180/�)
 		// atan()'s result is in radians
-		CGFloat theta = 180*atan((end.y-begin.y)/(end.x-begin.x)) / M_PI;
+		CGFloat theta = 180*atan((end.y-begin.y)/(end.x-begin.x)) / pi;
 		
 		// Deciding whether it should be horizontal, vertical, or at 45�
 		NSPoint newPoint = NSZeroPoint;
-        CGFloat size = fmin(fabs(end.x-begin.x),fabs(end.y-begin.y));
+		CGFloat size = fmin(abs(end.x-begin.x),abs(end.y-begin.y));
 		
-        if (fabs(theta) <= 67.5 && fabs(theta) >= 22.5) {
+		if (abs(theta) <= 67.5 && abs(theta) >= 22.5) {
 			// �/4
 			newPoint = NSMakePoint(size*x, size*y);
-        } else if (fabs(theta) > 67.5) {
+		} else if (abs(theta) > 67.5) {
 			// �/2
 			newPoint = NSMakePoint(0, (end.y-begin.y));
 		} else {
@@ -86,7 +86,7 @@
 	
 	// Which color do we use?
 	if (event == MOUSE_DOWN)
-        primaryColor = (flags & NSEventModifierFlagOption) ? backColor : frontColor;
+		primaryColor = (flags & NSAlternateKeyMask) ? backColor : frontColor;
 	
 	SWLockFocus(drawToMe); 
 	[[NSGraphicsContext currentContext] setShouldAntialias:NO];

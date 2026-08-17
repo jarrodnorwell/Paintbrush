@@ -18,8 +18,8 @@
 
 
 #import "SWTextToolWindowController.h"
-#import "SWToolbox.h"
 #import "SWTool.h"
+#import "SWToolbox.h"
 #import "SWDocument.h"
 
 @implementation SWTextToolWindowController
@@ -50,12 +50,13 @@
 	NSRange range;
 	range.length = [[textView string] length];
 	range.location = 0;
+    
 	NSAttributedString *attrString = [[NSAttributedString alloc] initWithAttributedString:
 									  [textView attributedSubstringFromRange:range]];
 	NSDictionary *d = [NSDictionary dictionaryWithObject:attrString forKey:@"newText"];
-	NSNotification *n = [NSNotification notificationWithName:@"SWTextEntered"
-													  object:self
-													userInfo:d];
+	NSNotification *n = [NSNotification notificationWithName:@"textEnteredNotificationName"
+													  object:attrString
+                                                    userInfo:@{}];
 	
 	// Notify the text tool that I have clicked OK
 	[[NSNotificationCenter defaultCenter] postNotification:n];
@@ -71,7 +72,7 @@
 	[self close];
 	[NSApp endSheet:[self window]];
 	if (document)
-		[[document toolbox] tieUpLooseEndsForCurrentTool];
+		[document.toolbox finaliseForCurrentTool];
 }
 
 //- (void)dealloc
