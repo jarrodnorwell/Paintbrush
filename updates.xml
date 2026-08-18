@@ -7,6 +7,21 @@
     <description>Changes made to the Paintbrush revival application by Jarrod Norwell</description>
     <language>en</language>
     <item>
+      <title>Version 4.1</title>
+      <link>https://jarrodnorwell.com/apps/paintbrush</link>
+      <sparkle:version>4.1</sparkle:version>
+      <description sparkle:format="markdown">
+        # Added
+          - fill style support to the toolbox allowing for no-fill, borderless and filled shapes
+        # Changed
+          - the design of the save panel to be more consistent with the rest of the app
+        # Fixed
+          - an issue where saving as JPEG or TIFF would "fail" due to being unable to read the saved file
+      </description>
+      <pubDate>Thu, 13 Aug 2026 03:36:00 +0800</pubDate>
+      <enclosure url="https://github.com/jarrodnorwell/Paintbrush/releases/download/4.1/Paintbrush.dmg" type="application/octet-stream" sparkle:edSignature="jrBug4fbhePjbmBPdP5JJtKCrHLCf7aDcJbWEKRNLyZQEt1iZyperYXyrRgx4aVut7B9rAXONE9RVC5iE6hMAA==" length="3153780" />
+    </item>
+    <item>
       <title>Version 4.0</title>
       <link>https://jarrodnorwell.com/apps/paintbrush</link>
       <sparkle:version>4.0</sparkle:version>

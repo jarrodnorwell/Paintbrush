@@ -2,9 +2,9 @@
 ## Tools
 - [ ] Bomb
 - [ ] Curve
-- [ ] Ellipsis
+- [x] Ellipse
 - [x] Eraser
-- [ ] Eyedropper
+- [x] Eyedropper
 - [ ] Fill
 - [x] Airbrush
 - [x] Brush
