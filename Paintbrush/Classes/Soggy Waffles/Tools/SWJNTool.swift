@@ -9,6 +9,12 @@ import Cocoa
 import Foundation
 
 @objcMembers class SWJNTool : NSObject {
+    @objc enum SWJNFillStyle : Int {
+        case stroke,
+             fill,
+             strokeAndFill
+    }
+    
     @objc enum SWJNMouseEvent : Int {
         case down,
              dragged,
@@ -28,7 +34,7 @@ import Foundation
     var lineWidth: CGFloat = 0
     
     var fill: Bool = false,
-        strike: Bool = false
+        stroke: Bool = false
     
     var showFillOptions: Bool = false,
         showTransparencyOptions: Bool = false
@@ -59,14 +65,14 @@ import Foundation
         toolboxController.addObserver(self, forKeyPath: "lineWidth", options: .new, context: nil)
         toolboxController.addObserver(self, forKeyPath: "foregroundColor", options: .new, context: nil)
         toolboxController.addObserver(self, forKeyPath: "backgroundColor", options: .new, context: nil)
-        // toolboxController.addObserver(self, forKeyPath: "fillStyle", options: .new, context: nil)
+        toolboxController.addObserver(self, forKeyPath: "fillStyle", options: .new, context: nil)
     }
     
     deinit {
         toolboxController.removeObserver(self, forKeyPath: "lineWidth")
         toolboxController.removeObserver(self, forKeyPath: "foregroundColor")
         toolboxController.removeObserver(self, forKeyPath: "backgroundColor")
-        // toolboxController.removeObserver(self, forKeyPath: "fillStyle")
+        toolboxController.removeObserver(self, forKeyPath: "fillStyle")
     }
     
     nonisolated override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?,
@@ -74,7 +80,7 @@ import Foundation
         guard let change: [NSKeyValueChangeKey : Any], let value: Any = change[.newKey] else {
             return
         }
-
+        
         switch keyPath {
         case "lineWidth":
             if let cgFloat = value as? CGFloat {
@@ -94,12 +100,13 @@ import Foundation
                     self.backgroundColor = color
                 }
             }
-        // case "fillStyle":
-        //     if let fillStyle = value as? Bool {
-        //         Task { @MainActor in
-        //             self.fillStyle = fillStyle
-        //         }
-        //     }
+        case "fillStyle":
+            if let fillStyle = value as? Int {
+                Task { @MainActor in
+                    self.fill = fillStyle == SWJNFillStyle.fill.rawValue || fillStyle == SWJNFillStyle.strokeAndFill.rawValue
+                    self.stroke = fillStyle == SWJNFillStyle.stroke.rawValue || fillStyle == SWJNFillStyle.strokeAndFill.rawValue
+                }
+            }
         default:
             break
         }

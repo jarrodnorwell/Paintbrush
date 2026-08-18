@@ -36,7 +36,7 @@
 	sharedController = [SWToolboxController sharedToolboxPanelController];
 	
 	// Create the dictionary
-	toolList = [[NSMutableDictionary alloc] initWithCapacity:7];
+	toolList = [[NSMutableDictionary alloc] initWithCapacity:8];
 	for (Class c in [SWToolbox toolClassList]) {
         SWJNTool *tool = [[c alloc] initWithDocument:doc paintView:doc.paintView toolbox:doc.toolbox toolboxController:sharedController];
         [toolList setObject:tool forKey:[tool description]];
@@ -107,6 +107,7 @@
         [SWJNEraserTool class],
         [SWJNAirbrushTool class],
         [SWJNLineTool class],
+        [SWJNEllipseTool class],
         [SWJNTextTool class],
         [SWJNEyedropperTool class],
         [SWJNZoomTool class]

@@ -23,23 +23,20 @@
 extern NSString * const kSWCurrentFileType;
 
 @interface SWSavePanelAccessoryController : NSViewController {
-	// We maintain a different view for certain fileTypes, as well as a default one
-	IBOutlet NSView *defaultView;
-	IBOutlet NSView *jpegView;
-	
-	// This is the slot they can go in
-	IBOutlet NSView *containerView;
-	
-	// The currently-selected filetype -- used for KVO
     NSString *currentFileType;
-	
-	// The controls in our views -- we start with the global popup button
+    
 	IBOutlet NSPopUpButton *fileTypeButton;
-	
-	// Used in the various subviews
+    IBOutlet NSSlider *compressionSlider;
+    
+    IBOutlet NSTextField *bestTextField;
+    IBOutlet NSTextField *leastTextField;
+    IBOutlet NSTextField *qualityTextField;
+    
 	BOOL isAlphaEnabled;
 	CGFloat imageQuality;
 }
+
+-(IBAction) changeImageQuality:(NSSlider *)sender;
 
 - (void)updateViewForFileType:(NSString *)fileType;
 - (NSView *)viewForFileType:(NSString *)fileType;

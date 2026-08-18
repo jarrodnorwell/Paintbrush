@@ -19,24 +19,18 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef enum {
-	STROKE_ONLY,
-	FILL_ONLY,
-	FILL_AND_STROKE
-} SWFillStyle;
-
 @class SWColorSelector;
 @class SWMatrix;
 @class SWDocument;
 
 @class SWToolbox;
 
-@interface SWToolboxController : NSWindowController {	
+@interface SWToolboxController : NSWindowController {
 	NSColor *foregroundColor;
 	NSColor *backgroundColor;
 	NSString *currentTool;
 	NSInteger lineWidth;
-	SWFillStyle fillStyle;
+	NSInteger fillStyle;
 	BOOL selectionTransparency;
 	
 	IBOutlet SWMatrix *toolMatrix;
@@ -63,10 +57,10 @@ typedef enum {
 -(IBAction) changeCurrentTool:(NSButton *)sender;
 -(void) changeCurrentToolWithString:(NSString *)string;
 
+-(IBAction) changeFillStyle:(NSButton *)sender;
+
 -(IBAction) changeBackgroundColor:(NSColorWell *)sender;
 -(IBAction) changeForegroundColor:(NSColorWell *)sender;
-
--(IBAction) changeFillStyle:(NSButton *)sender;
 
 -(IBAction) changeLineWidth:(NSSlider *)sender;
 
@@ -79,14 +73,14 @@ typedef enum {
 // @property (assign,nonatomic) NSInteger lineWidth;
 @property (assign) BOOL selectionTransparency;
 @property (copy, nonatomic) NSString *currentTool;
-@property (assign) SWFillStyle fillStyle;
+@property (assign) NSInteger fillStyle;
 @property (retain) NSColor *foregroundColor;
 @property (retain) NSColor *backgroundColor;
 //
 @property (readonly) SWDocument *activeDocument;
 //@property (readonly) NSMutableArray *toolListArray;
 
-@property (nonatomic, assign) IBOutlet NSButton *previousButton;
+@property (nonatomic, assign) IBOutlet NSButton *previousButton, *previousFillStyleButton;
 @property (nonatomic, assign) IBOutlet NSImageView *imageView;
 @end
 

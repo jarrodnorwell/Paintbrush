@@ -37,6 +37,17 @@ private extension BinaryFloatingPoint {
         return string
     }
     
+    func clean(fileType: String) -> String {
+        var string: String = fileType.lowercased()
+        return if string == "jpeg" {
+            "jpeg"
+        } else if string == "tiff" {
+            "tif"
+        } else {
+            string
+        }
+    }
+    
     // MARK: Image Tools
     func clear(image: NSBitmapImageRep? = nil, in rect: NSRect = .zero) {
         guard let image: NSBitmapImageRep else {

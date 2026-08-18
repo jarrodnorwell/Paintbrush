@@ -47,8 +47,21 @@ NSString * const kSWCurrentFileType = @"currentFileType";
         [fileTypeButton addItemWithTitle:type];
     
     // Initialize the values for the controls in the subviews
-    [self setImageQuality:0.8];
+    [self setImageQuality:8];
     [self setIsAlphaEnabled:YES];
+    
+    [compressionSlider setFloatValue:imageQuality];
+    [qualityTextField setStringValue:[NSString stringWithFormat:@"%.1f", imageQuality / 10]];
+    
+    [compressionSlider setEnabled:[currentFileType isEqualToString:@"JPEG"]];
+    [bestTextField setEnabled:[currentFileType isEqualToString:@"JPEG"]];
+    [leastTextField setEnabled:[currentFileType isEqualToString:@"JPEG"]];
+    [qualityTextField setEnabled:[currentFileType isEqualToString:@"JPEG"]];
+}
+
+-(IBAction) changeImageQuality:(NSSlider *)sender {
+    [self setImageQuality:sender.floatValue];
+    [qualityTextField setStringValue:[NSString stringWithFormat:@"%.1f", imageQuality / 10]];
 }
 
 
@@ -67,18 +80,10 @@ NSString * const kSWCurrentFileType = @"currentFileType";
 // Sets up the accessory view for optimal awesomeness
 - (void)updateViewForFileType:(NSString *)fileType
 {
-    // First empty out the container view
-    for (NSView *subview in [containerView subviews])
-        [subview removeFromSuperview];
-    
-    // Now we can add the correct subview
-    if ([fileType isEqualToString:@"JPEG"]) {
-        [containerView addSubview:jpegView];
-    }/* else {
-        // In all other cases, just use this view
-        [containerView addSubview:defaultView];
-    }*/
-    
+    [compressionSlider setEnabled:[fileType isEqualToString:@"JPEG"]];
+    [bestTextField setEnabled:[fileType isEqualToString:@"JPEG"]];
+    [leastTextField setEnabled:[fileType isEqualToString:@"JPEG"]];
+    [qualityTextField setEnabled:[fileType isEqualToString:@"JPEG"]];
 }
 
 

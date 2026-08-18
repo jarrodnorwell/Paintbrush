@@ -277,8 +277,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
 
 
 // Override to ensure that the user's file type is set
-- (IBAction)saveDocument:(id)sender
-{
+-(IBAction) saveDocument:(id)sender {
 	[toolbox finaliseForCurrentTool];
     [super saveDocument:sender];
 }
@@ -318,18 +317,18 @@ static BOOL kSWDocumentWillShowSheet = YES;
         fileType = NSBitmapImageFileTypeBMP;
     else if ([aType isEqualToString:@"png"])
         fileType = NSBitmapImageFileTypePNG;
-    else if ([aType isEqualToString:@"jpg"])
+    else if ([aType isEqualToString:@"jpeg"])
         fileType = NSBitmapImageFileTypeJPEG;
     else if ([aType isEqualToString:@"gif"])
         fileType = NSBitmapImageFileTypeGIF;
-    else if ([aType isEqualToString:@"tif"])
+    else if ([aType isEqualToString:@"tiff"])
         fileType = NSBitmapImageFileTypeTIFF;
     else
         DebugLog(@"Error: unknown filetype!");
     
     // We need to retrieve the data stored in the save panel, and pack them into a dictionary
     NSTIFFCompression tiffCompression = (fileType == NSBitmapImageFileTypeJPEG ? NSTIFFCompressionJPEG : NSTIFFCompressionNone);
-    CGFloat compressionFactor = [savePanelAccessoryController imageQuality];
+    CGFloat compressionFactor = [savePanelAccessoryController imageQuality] / 10;
     //BOOL alpha = [savePanelAccessoryViewController isAlphaEnabled];
     NSDictionary *propDict = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithInteger:tiffCompression], NSImageCompressionMethod,
@@ -398,8 +397,8 @@ static BOOL kSWDocumentWillShowSheet = YES;
     }
     
     // Make sure the correct file extension is being used
-    [savePanel setAllowedFileTypes:[NSArray arrayWithObject:currentFileType]];
-    
+    [savePanel setAllowedFileTypes:@[[[SWJNImageTools shared] cleanWithFileType:currentFileType]]];
+     
     return YES;
 }
 
@@ -427,7 +426,7 @@ static BOOL kSWDocumentWillShowSheet = YES;
         }
         
 		NSSavePanel *savePanel = (NSSavePanel *)[[savePanelAccessoryController view] window];
-        [savePanel setAllowedFileTypes:[NSArray arrayWithObject:currentFileType]];
+        [savePanel setAllowedFileTypes:@[[[SWJNImageTools shared] cleanWithFileType:currentFileType]]];
 	}
 }
 
@@ -629,7 +628,6 @@ static BOOL kSWDocumentWillShowSheet = YES;
 		NSPoint point = [(SWJNTool *)sender savedPoint];
         if ([scrollView scaleUp])
             [scrollView setScaleTo:scrollView.scale * 2 at:point adjustingScalePushButton:YES];
-		// [scrollView setScaleFactor:([scrollView scaleFactor] * 2) atPoint:point adjustPopup:YES];
 	} else {
 		// Came from somewhere else (probably an NSMenuItem)
         if ([scrollView scaleUp])

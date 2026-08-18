@@ -53,7 +53,7 @@
 		DebugLog(@"Key window is %@", document);		
 	}
 }
-
+ 
 
 + (SWToolboxController *)sharedToolboxPanelController
 {
@@ -97,14 +97,20 @@
 	
 	// Set the starting toolbox info
 	[self setLineWidthDisplay:3];
-	[self setForegroundColor:[NSColor colorWithCalibratedRed:0.0 green:0.0 blue:0.0 alpha:1.0]];
-	[self setBackgroundColor:[NSColor colorWithCalibratedRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
-	[self setFillStyle:STROKE_ONLY];
+	[self setForegroundColor:[NSColor blackColor]];
+	[self setBackgroundColor:[NSColor whiteColor]];
+    [self setFillStyle:SWJNFillStyle::SWJNFillStyleStroke]; // [self setFillStyle:STROKE_ONLY];
 	[self setSelectionTransparency:NO];
+    
+    [self.foregroundColorWell setColor:foregroundColor];
+    [self.backgroundColorWell setColor:backgroundColor];
     
     if ([currentTool isEqualToString:@""] && _previousButton)
         [_previousButton setContentTintColor:[NSColor systemBlueColor]];
     [self changeCurrentToolWithString:@"Brush"];
+    
+    if (_previousFillStyleButton)
+        [_previousFillStyleButton setContentTintColor:[NSColor systemBlueColor]];
 }
 
 
@@ -117,9 +123,17 @@
 	[self setFillStyle:[self fillStyle]];
 	[self setSelectionTransparency:[self selectionTransparency]];
     
+    if (foregroundColor && backgroundColor) {
+        [self.foregroundColorWell setColor:foregroundColor];
+        [self.backgroundColorWell setColor:backgroundColor];
+    }
+    
     if ([currentTool isEqualToString:@""] && _previousButton)
         [_previousButton setContentTintColor:[NSColor systemBlueColor]];
     [self changeCurrentToolWithString:@"Brush"];
+    
+    if (_previousFillStyleButton)
+        [_previousFillStyleButton setContentTintColor:[NSColor systemBlueColor]];
 }
 
 
@@ -217,6 +231,15 @@
         [self setCurrentTool:string];
 }
 
+-(IBAction) changeFillStyle:(NSButton *)sender {
+    [sender setContentTintColor:[NSColor systemBlueColor]];
+    if (_previousFillStyleButton)
+        [_previousFillStyleButton setContentTintColor:NULL];
+    _previousFillStyleButton = sender;
+    
+    [self setFillStyle:sender.tag];
+}
+
 -(void) changeCurrentToolWithString:(NSString *)string {
     if (string && ![string isEqualToString:@""])
         [self setCurrentTool:[NSString stringWithFormat:@"%@", string]];
@@ -230,10 +253,6 @@
 -(IBAction) changeForegroundColor:(NSColorWell *)sender {
     NSColor *color = [sender color];
     [self setForegroundColor:color];
-}
-
--(IBAction) changeFillStyle:(NSButton *)sender {
-    [self setFillStyle:(SWFillStyle)sender.tag];
 }
 
 -(IBAction) changeLineWidth:(NSSlider *)sender {

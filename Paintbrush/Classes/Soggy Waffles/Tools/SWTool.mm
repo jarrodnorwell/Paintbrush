@@ -21,6 +21,8 @@
 #import "SWTool.h"
 #import "SWToolboxController.h"
 
+#import "Paintbrush-Swift.h"
+
 @implementation SWTool
 
 @synthesize flags;
@@ -75,9 +77,9 @@
 	} else if ([keyPath isEqualToString:@"backgroundColor"]) {
 		[self setBackColor:thing];
 	} else if ([keyPath isEqualToString:@"fillStyle"]) {
-		SWFillStyle fillStyle = (SWFillStyle)[thing integerValue];
-		[self setShouldFill:(fillStyle == FILL_ONLY || fillStyle == FILL_AND_STROKE)
-					 stroke:(fillStyle == STROKE_ONLY || fillStyle == FILL_AND_STROKE)];
+        SWJNFillStyle fillStyle = (SWJNFillStyle)[thing integerValue];
+		[self setShouldFill:(fillStyle == SWJNFillStyle::SWJNFillStyleFill || fillStyle == SWJNFillStyle::SWJNFillStyleStrokeAndFill)
+					 stroke:(fillStyle == SWJNFillStyle::SWJNFillStyleStroke || fillStyle == SWJNFillStyle::SWJNFillStyleStrokeAndFill)];
 	}
 }
 

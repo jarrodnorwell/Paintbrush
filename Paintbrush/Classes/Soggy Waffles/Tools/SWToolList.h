@@ -20,7 +20,6 @@
 // Just a collection of all the tools in the program
 #import "SWTool.h"
 #import "SWRectangleTool.h"
-#import "SWEllipseTool.h"
 #import "SWCurveTool.h"
 #import "SWFillTool.h"
 #import "SWSelectionTool.h"

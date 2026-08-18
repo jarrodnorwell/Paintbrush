@@ -12,6 +12,7 @@
                 <outlet property="foregroundColorWell" destination="MPs-95-2ke" id="E5M-cn-eKL"/>
                 <outlet property="imageView" destination="is3-z9-xYr" id="KJW-UG-xcN"/>
                 <outlet property="previousButton" destination="kii-SI-Vt7" id="fi0-X9-hwh"/>
+                <outlet property="previousFillStyleButton" destination="dMC-LS-FGs" id="abd-5y-VLK"/>
                 <outlet property="window" destination="MHb-ug-OGY" id="Wfr-1N-2ao"/>
             </connections>
         </customObject>
@@ -245,6 +246,7 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <color key="contentTintColor" name="systemBlueColor" catalog="System" colorSpace="catalog"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="29" id="K78-UO-DP5"/>
                             <constraint firstAttribute="height" constant="29" id="nyG-02-u6M"/>
